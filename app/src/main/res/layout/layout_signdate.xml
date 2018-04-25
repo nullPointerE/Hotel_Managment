@@ -16,16 +16,21 @@
         android:background="@color/colorAccent"/>
 
     <com.example.yiming.hotelmanagment.view.calendar.InnerGridView
+        android:id="@+id/gvWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7">
+    </com.example.yiming.hotelmanagment.view.calendar.InnerGridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <com.example.yiming.hotelmanagment.view.calendar.InnerGridView
         android:id="@+id/gvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="7">
     </com.example.yiming.hotelmanagment.view.calendar.InnerGridView>
 
-    <com.example.yiming.hotelmanagment.view.calendar.InnerGridView
-        android:id="@+id/gvWeek"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="7">
-    </com.example.yiming.hotelmanagment.view.calendar.InnerGridView>
 </LinearLayout>
