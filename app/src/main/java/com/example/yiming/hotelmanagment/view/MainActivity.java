@@ -17,9 +17,7 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.util.adapter.ViewPagerAdapter;
-import com.example.yiming.hotelmanagment.util.authentication.finger.FingerHelper;
-import com.example.yiming.hotelmanagment.util.authentication.finger.FingerprintException;
-import com.example.yiming.hotelmanagment.util.authentication.finger.FingerprintHandler;
+
 
 import javax.crypto.Cipher;
 
