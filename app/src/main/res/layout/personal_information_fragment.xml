@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/personal_info_titleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:text="@string/personal_information_title_text" />
+
+    <Spinner
+        android:id="@+id/personal_info_titleSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        />
+
+    <EditText
+        android:id="@+id/personal_info_fnameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:ems="10"
+        android:padding="@dimen/viewPadding"
+        android:inputType="textPersonName"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/personal_info_fname_hintText" />
+
+    <EditText
+        android:id="@+id/personal_info_middleNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="@dimen/viewPadding"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/personal_info_middleName_hintText" />
+
+    <EditText
+        android:id="@+id/personal_info_lnameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="@dimen/viewPadding"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/personal_info_lastName_hintText" />
+
+    <EditText
+        android:id="@+id/personal_info_emailET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/viewPadding"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/personal_info_email_hintText"/>
+
+    <EditText
+        android:id="@+id/personal_info_emailET_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/viewPadding"
+        android:hint="@string/peronal_info_emailConfirmation_hintText"/>
+
+    <CheckBox
+        android:id="@+id/personal_info_createNewAccoutCB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:text="@string/personal_info_createNewAccount_CBText" />
+
+    <TextView
+        android:id="@+id/personal_info_genderTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        android:textColor="@color/colorSecondaryText"
+        android:text="@string/personal_info_gender_text" />
+
+    <Spinner
+        android:id="@+id/personal_info_genderSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/personal_information_view_margin"
+        />
+
+    <Button
+        android:id="@+id/personal_info_continue_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/viewPadding"
+        android:background="@drawable/button_bg_gradient"
+        android:textColor="@color/colorButtonText"
+        android:text="@string/personal_info_continue_buttonText" />
+
+</LinearLayout>
+</ScrollView>

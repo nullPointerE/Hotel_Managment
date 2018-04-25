@@ -20,11 +20,11 @@ public class Splasher extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Splasher.this,MainActivity.class));
+                startActivity(new Intent(Splasher.this, LoginActivity.class));
             }
         },2000);
         video =findViewById(R.id.video);
-        String uri = "android.resource://" + getPackageName() + "/" +R.raw.top10 ;
+        String uri = "android.resource://" + getPackageName() + "/" +R.raw.top10;
         video.setVideoURI(Uri.parse(uri));
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.FILL_PARENT,
