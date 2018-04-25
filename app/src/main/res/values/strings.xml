@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">Hotel Managment</string>
+    <string name="personal_information_title_text">Title*</string>
+    <string name="personal_info_fname_hintText">First Name*</string>
+    <string name="personal_info_middleName_hintText">Middle Name</string>
+    <string name="personal_info_lastName_hintText">Last Name*</string>
+    <string name="personal_info_email_hintText">Email Address*</string>
+    <string name="peronal_info_emailConfirmation_hintText">Retype Email Address*</string>
+    <string name="personal_info_createNewAccount_CBText">Create New Account</string>
+    <string name="personal_info_gender_text">Gender*</string>
+    <string name="personal_info_continue_buttonText">Continue</string>
+    <string-array name="title">
+        <item>MR</item>
+        <item>MS</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
     <string name="book">BOOK</string>
 </resources>
