@@ -43,7 +43,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         if(position==0)
             return Constants.ROOMS;
         else{
-            return Constants.ROOMS;
+            return Constants.BOOKED;
         }
     }
 }

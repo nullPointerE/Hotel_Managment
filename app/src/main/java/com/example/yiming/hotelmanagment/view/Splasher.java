@@ -22,7 +22,7 @@ public class Splasher extends AppCompatActivity {
             public void run() {
                 startActivity(new Intent(Splasher.this,MainActivity.class));
             }
-        },2000);
+        },1500);
         video =findViewById(R.id.video);
         String uri = "android.resource://" + getPackageName() + "/" +R.raw.top10 ;
         video.setVideoURI(Uri.parse(uri));
