@@ -16,7 +16,7 @@ import android.widget.RadioButton;
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
-import com.example.yiming.hotelmanagment.data.local.TasksDbHelper;
+import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 
 public class AdditionalInformationFragment extends Fragment implements View.OnClickListener {
@@ -25,14 +25,13 @@ private Button submitButton;
 private EditText commentEt;
 private CheckBox termsAndConditions;
 private Customer customer;
-private SQLiteDatabase sqLiteDatabase;
-private TasksDbHelper tasksDbHelper;
+private TasksLocalDataSource tasksLocalDataSource;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customer = (Customer) getArguments().getParcelable(Constants.GUEST_INFO_BUNDLE_KEY);
-        tasksDbHelper = new TasksDbHelper(getActivity());
-        sqLiteDatabase = tasksDbHelper.getWritableDatabase();
+        tasksLocalDataSource = TasksLocalDataSource.getInstance(getActivity());
+
     }
 
     @Nullable
@@ -70,21 +69,7 @@ private TasksDbHelper tasksDbHelper;
         termsAndConditions.setTextColor(getResources().getColor(R.color.red));
     }
     else {
-        ContentValues values=new ContentValues();
-        values.put(TasksPersistenceContract.CustomerTable.TITLE, customer.getTitle());
-        values.put(TasksPersistenceContract.CustomerTable.firstName, customer.getFirstName());
-        values.put(TasksPersistenceContract.CustomerTable.lastName, customer.getLastName());
-        values.put(TasksPersistenceContract.CustomerTable.EMAILADDRESS, customer.getEmailAddress());
-        values.put(TasksPersistenceContract.CustomerTable.GENDER, customer.getGender());
-        values.put(TasksPersistenceContract.CustomerTable.COMPANYNAME, customer.getCompanyName());
-        values.put(TasksPersistenceContract.CustomerTable.ADDRESS, customer.getAddress());
-        values.put(TasksPersistenceContract.CustomerTable.CITY, customer.getCity());
-        values.put(TasksPersistenceContract.CustomerTable.POSTALCODE, customer.getPostalCode());
-        values.put(TasksPersistenceContract.CustomerTable.COUNTRY, customer.getCountry());
-        values.put(TasksPersistenceContract.CustomerTable.phoneNumber, customer.getMobilePhone());
-        values.put(TasksPersistenceContract.CustomerTable.PURPOSEOFVISIT, customer.getPurposeOfVisit());
-        values.put(TasksPersistenceContract.CustomerTable.COMMENTS, customer.getComments());
-        sqLiteDatabase.insert(TasksPersistenceContract.CustomerTable.TABLE_NAME, null, values);
+        tasksLocalDataSource.addCustomer(customer);
     }
     }
 

@@ -22,7 +22,6 @@ public class CalendarPagerAdapter extends PagerAdapter {
         return view==object;
     }
 
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {

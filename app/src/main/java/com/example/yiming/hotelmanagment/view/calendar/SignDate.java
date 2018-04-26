@@ -37,7 +37,7 @@ public class SignDate extends LinearLayout {
     }
 
     public void init(){
-        View view = View.inflate(getContext(), R.layout.calendar_signdate,this);
+        View view = View.inflate(getContext(), R.layout.layout_signdate,this);
         tvYear = view.findViewById(R.id.tvYear);
         gvWeek = view.findViewById(R.id.gvWeek);
         gvDate = view.findViewById(R.id.gvDate);

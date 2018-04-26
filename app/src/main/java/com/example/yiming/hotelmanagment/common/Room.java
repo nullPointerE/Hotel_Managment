@@ -94,4 +94,5 @@ public class Room {
     public void setActualCheckOutDate(Date actualCheckOutDate) {
         this.actualCheckOutDate = actualCheckOutDate;
     }
+
 }

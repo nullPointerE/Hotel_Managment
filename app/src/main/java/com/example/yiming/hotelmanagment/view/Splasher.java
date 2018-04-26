@@ -9,11 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.example.yiming.hotelmanagment.R;
-import com.example.yiming.hotelmanagment.common.Customer;
-import com.example.yiming.hotelmanagment.common.Food;
-import com.example.yiming.hotelmanagment.common.Room;
-import com.example.yiming.hotelmanagment.data.TasksDataSource;
-import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 
 public class Splasher extends AppCompatActivity {
     VideoView video;
@@ -21,12 +16,13 @@ public class Splasher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splasher);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(Splasher.this, LoginActivity.class));
             }
-        },500);
+        },1500);
         video =findViewById(R.id.video);
         String uri = "android.resource://" + getPackageName() + "/" +R.raw.top10;
         video.setVideoURI(Uri.parse(uri));

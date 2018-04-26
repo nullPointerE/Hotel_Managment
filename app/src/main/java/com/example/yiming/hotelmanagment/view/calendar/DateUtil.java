@@ -14,7 +14,7 @@ public class DateUtil {
     public static String getCurrentYearAndMonth(){
         Calendar calendar = Calendar.getInstance();
         int year=calendar.get(Calendar.YEAR);
-        int month=calendar.get(Calendar.MONTH)+1;
+        int month=calendar.get(Calendar.MONTH);
         return year+"-"+month;
     }
 
