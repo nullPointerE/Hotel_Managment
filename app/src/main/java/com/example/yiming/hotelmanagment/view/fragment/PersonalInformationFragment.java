@@ -1,7 +1,7 @@
 package com.example.yiming.hotelmanagment.view.fragment;
-
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +18,11 @@ import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 
 public class PersonalInformationFragment extends Fragment implements View.OnClickListener {
-private TextView firstName, middleName, lastName, emailAddress, emailAddressConfirmation;
-private Spinner title, gender;
-private CheckBox createNewAccount;
-private Button continueButton;
-private Customer customer;
+    private TextView firstName, middleName, lastName, emailAddress, emailAddressConfirmation;
+    private Spinner title, gender;
+    private CheckBox createNewAccount;
+    private Button continueButton;
+    private Customer customer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ private Customer customer;
         customer.setCreateNewAccount(createNewAccount.isChecked());
         AddressInformationFragment addressInformationFragment = new AddressInformationFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, customer);
+        bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
         addressInformationFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment);
     }

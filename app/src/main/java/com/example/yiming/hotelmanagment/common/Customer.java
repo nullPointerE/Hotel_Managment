@@ -1,5 +1,4 @@
 package com.example.yiming.hotelmanagment.common;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -239,9 +238,9 @@ public class Customer implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-       parcel.writeString(title);
-       parcel.writeString(firstName);
-       parcel.writeString(middleName);
+        parcel.writeString(title);
+        parcel.writeString(firstName);
+        parcel.writeString(middleName);
         parcel.writeString(lastName);
         parcel.writeString(emailAddress);
         parcel.writeString(gender);

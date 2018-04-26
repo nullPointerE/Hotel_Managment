@@ -20,12 +20,12 @@ import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 
 public class AdditionalInformationFragment extends Fragment implements View.OnClickListener {
-private RadioButton bussinessRadioButton, leisureRadioButton;
-private Button submitButton;
-private EditText commentEt;
-private CheckBox termsAndConditions;
-private Customer customer;
-private TasksLocalDataSource tasksLocalDataSource;
+    private RadioButton bussinessRadioButton, leisureRadioButton;
+    private Button submitButton;
+    private EditText commentEt;
+    private CheckBox termsAndConditions;
+    private Customer customer;
+    private TasksLocalDataSource tasksLocalDataSource;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +55,22 @@ private TasksLocalDataSource tasksLocalDataSource;
             case R.id.additional_info_bussiness_radioButton:
                 if (checked)
                     customer.setPurposeOfVisit(((RadioButton) view).getText().toString());
-                    break;
+                break;
             case R.id.additional_info_leisure_radioButton:
                 if (checked)
                     customer.setPurposeOfVisit(((RadioButton) view).getText().toString());
-                    break;
+                break;
         }
     }
     @Override
     public void onClick(View view) {
-    customer.setComments(commentEt.getText().toString());
-    if(!termsAndConditions.isChecked()){
-        termsAndConditions.setTextColor(getResources().getColor(R.color.red));
-    }
-    else {
-        tasksLocalDataSource.addCustomer(customer);
-    }
+        customer.setComments(commentEt.getText().toString());
+        if(!termsAndConditions.isChecked()){
+            termsAndConditions.setTextColor(getResources().getColor(R.color.red));
+        }
+        else {
+            tasksLocalDataSource.addCustomer(customer);
+        }
     }
 
 

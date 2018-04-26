@@ -48,5 +48,4 @@ public class Food {
     public void setPayed(int payed) {
         isPayed = payed;
     }
-
 }

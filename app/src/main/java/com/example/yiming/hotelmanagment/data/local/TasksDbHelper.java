@@ -22,25 +22,25 @@ public class TasksDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+ CustomerTable.TABLE_NAME+" (" +
                 CustomerTable.customerId+" Integer primary key autoincrement," +
-                CustomerTable.title+" varchar(15)," +
                 CustomerTable.firstName+" varchar(20)," +
-                CustomerTable.middleName+" varchar(20)," +
                 CustomerTable.lastName+" varchar(20)," +
-                CustomerTable.emailAddress+" varchar(30)," +
+                CustomerTable.numberOfCustomers+" Integer," +
+                CustomerTable.assignedRoom+" Integer," +
+                CustomerTable.mobilePhone+" varchar(15)," +
+                CustomerTable.title+" varchar(15)," +
                 CustomerTable.gender+" varchar(15)," +
+                CustomerTable.creditCard+" varchar(15)," +
+                CustomerTable.comments+" Text," +
+                CustomerTable.roomIsGuaranteed+" Integer," +
+                CustomerTable.middleName+" varchar(20)," +
+                CustomerTable.emailAddress+" varchar(30)," +
                 CustomerTable.companyName+" varchar(20)," +
                 CustomerTable.address+" varchar(30)," +
                 CustomerTable.city+" varchar(20)," +
                 CustomerTable.postalCode+" varchar(10)," +
                 CustomerTable.country+" varchar(10)," +
                 CustomerTable.daytimePhone+" varchar(10)," +
-                CustomerTable.mobilePhone+" varchar(15)," +
-                CustomerTable.comments+" Text," +
-                        CustomerTable.purposeOfVisit+" varchar(50),"+
-                CustomerTable.numberOfCustomers+" Integer," +
-                CustomerTable.assignedRoom+" Integer," +
-                CustomerTable.creditCard+" varchar(15)," +
-                CustomerTable.roomIsGuaranteed+" Integer)");
+                CustomerTable.purposeOfVisit+" varchar(50))");
 
         db.execSQL("create table "+RoomTable.TABLE_NAME+"(" +
                 RoomTable.roomNumber+" Integer primary key not null," +
