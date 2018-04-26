@@ -19,7 +19,8 @@ public class CalendarDialog extends DialogFragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.calendar_viewpager,container,false);
         viewPager=v.findViewById(R.id.viewPager);
-        viewPager.setAdapter(new CalendarPagerAdapter(getActivity()));
+        CalendarPagerAdapter calendarPagerAdapter=new CalendarPagerAdapter(getActivity());
+        viewPager.setAdapter(calendarPagerAdapter);
         return v;
     }
 }

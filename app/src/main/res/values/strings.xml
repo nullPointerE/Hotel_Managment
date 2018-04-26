@@ -30,4 +30,5 @@
     <string name="additional_info_bussiness_radioText">Bussiness</string>
     <string name="additional_info_leisure_radioText">Leisure</string>
     <string name="additional_info_button_text">Submit</string>
+    <string name="client">Client</string>
 </resources>

@@ -1,3 +1,4 @@
+package com.example.yiming.hotelmanagment.common;
 
 public class Customer {
     private String title, firstName,middleName, lastName,emailAddress, gender, companyName, address,creditCard;
