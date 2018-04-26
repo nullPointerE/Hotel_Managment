@@ -1,5 +1,9 @@
+package com.example.yiming.hotelmanagment.common;
 
-public class Customer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Customer implements Parcelable{
     private String title, firstName,middleName, lastName,emailAddress, gender, companyName, address,creditCard;
     private String city, postalCode, country, daytimePhone,mobilePhone,comments, purposeOfVisit;
     boolean createNewAccount, isTermsAccepted;
@@ -14,6 +18,43 @@ public class Customer {
     public Customer() {
 
     }
+
+    protected Customer(Parcel in) {
+        title = in.readString();
+        firstName = in.readString();
+        middleName = in.readString();
+        lastName = in.readString();
+        emailAddress = in.readString();
+        gender = in.readString();
+        companyName = in.readString();
+        address = in.readString();
+        creditCard = in.readString();
+        city = in.readString();
+        postalCode = in.readString();
+        country = in.readString();
+        daytimePhone = in.readString();
+        mobilePhone = in.readString();
+        comments = in.readString();
+        purposeOfVisit = in.readString();
+        createNewAccount = in.readByte() != 0;
+        isTermsAccepted = in.readByte() != 0;
+        CustomerId = in.readInt();
+        numberOfCustomers = in.readInt();
+        assignedRoom = in.readInt();
+        roomIsGuaranteed = in.readInt();
+    }
+
+    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
+        @Override
+        public Customer createFromParcel(Parcel in) {
+            return new Customer(in);
+        }
+
+        @Override
+        public Customer[] newArray(int size) {
+            return new Customer[size];
+        }
+    };
 
     public int getCustomerId() {
         return CustomerId;
@@ -189,5 +230,37 @@ public class Customer {
 
     public void setTermsAccepted(boolean termsAccepted) {
         isTermsAccepted = termsAccepted;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+       parcel.writeString(title);
+       parcel.writeString(firstName);
+       parcel.writeString(middleName);
+        parcel.writeString(lastName);
+        parcel.writeString(emailAddress);
+        parcel.writeString(gender);
+        parcel.writeString(companyName);
+        parcel.writeString(address);
+        parcel.writeString(creditCard);
+        parcel.writeString(city);
+        parcel.writeString(postalCode);
+        parcel.writeString(country);
+        parcel.writeString(daytimePhone);
+        parcel.writeString(mobilePhone);
+        parcel.writeString(comments);
+        parcel.writeString(purposeOfVisit);
+        parcel.writeByte((byte) (createNewAccount ? 1 : 0));
+        parcel.writeByte((byte) (isTermsAccepted ? 1 : 0));
+        parcel.writeInt(CustomerId);
+        parcel.writeInt(numberOfCustomers);
+        parcel.writeInt(assignedRoom);
+        parcel.writeInt(roomIsGuaranteed);
+
     }
 }

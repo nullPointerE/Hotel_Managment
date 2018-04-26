@@ -1,6 +1,8 @@
 package com.example.yiming.hotelmanagment.view.fragment;
 
 import android.app.Fragment;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.widget.RadioButton;
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
+import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
+import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 
 public class AdditionalInformationFragment extends Fragment implements View.OnClickListener {
 private RadioButton bussinessRadioButton, leisureRadioButton;
@@ -21,11 +25,13 @@ private Button submitButton;
 private EditText commentEt;
 private CheckBox termsAndConditions;
 private Customer customer;
-
+private TasksLocalDataSource tasksLocalDataSource;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         customer = (Customer) getArguments().getParcelable(Constants.GUEST_INFO_BUNDLE_KEY);
+        tasksLocalDataSource = TasksLocalDataSource.getInstance(getActivity());
+
     }
 
     @Nullable
@@ -63,7 +69,7 @@ private Customer customer;
         termsAndConditions.setTextColor(getResources().getColor(R.color.red));
     }
     else {
-        
+        tasksLocalDataSource.addCustomer(customer);
     }
     }
 
