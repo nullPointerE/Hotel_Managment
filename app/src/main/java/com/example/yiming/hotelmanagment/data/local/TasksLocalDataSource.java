@@ -275,21 +275,22 @@ public class TasksLocalDataSource implements TasksDataSource {
     public Cursor getRoomById(int roomNumber){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
         Cursor cursor = db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
-        db.close();
         return cursor;
     }
 
     public Cursor getFoodById(int foodId){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
         Cursor cursor = db.query(FoodTable.TABLE_NAME,null,FoodTable.foodId+"=?",new String[]{String.valueOf(foodId)},null,null,null);
-        db.close();
         return cursor;
     }
     public Cursor getCustomerById(int customerId){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
         Cursor cursor = db.query(CustomerTable.TABLE_NAME,null,CustomerTable.customerId+"=?",new String[]{String.valueOf(customerId)},null,null,null);
-        db.close();
         return cursor;
+    }
+    public void closeDB(){
+        SQLiteDatabase db=mDbHelper.getWritableDatabase();
+        db.close();
     }
 }
 
