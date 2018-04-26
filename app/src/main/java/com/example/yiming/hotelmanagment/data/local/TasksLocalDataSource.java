@@ -273,20 +273,17 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     public Cursor getRoomById(int roomNumber){
-        SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
-        return cursor;
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        return db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
     }
 
     public Cursor getFoodById(int foodId){
-        SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query(FoodTable.TABLE_NAME,null,FoodTable.foodId+"=?",new String[]{String.valueOf(foodId)},null,null,null);
-        return cursor;
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        return db.query(FoodTable.TABLE_NAME,null,FoodTable.foodId+"=?",new String[]{String.valueOf(foodId)},null,null,null);
     }
     public Cursor getCustomerById(int customerId){
-        SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query(CustomerTable.TABLE_NAME,null,CustomerTable.customerId+"=?",new String[]{String.valueOf(customerId)},null,null,null);
-        return cursor;
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        return db.query(CustomerTable.TABLE_NAME,null,CustomerTable.customerId+"=?",new String[]{String.valueOf(customerId)},null,null,null);
     }
     public void closeDB(){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
