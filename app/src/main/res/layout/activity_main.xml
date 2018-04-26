@@ -5,18 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
     android:clipToPadding="true"
+    android:background="@color/black"
     android:fitsSystemWindows="true"
     tools:context=".view.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
-        app:contentInsetStart="0dp"
         android:layout_width="match_parent"
-        app:title=""
-        android:layout_height="@dimen/toolBarHeight"
         android:background="@drawable/actionbar"
+        android:layout_height="@dimen/toolBarHeight"
         >
     </android.support.v7.widget.Toolbar>
 
@@ -24,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarHeight"
         android:background="@color/tranparent"/>
-
     <TextView
         android:text="Client"
         android:textColor="@color/white"

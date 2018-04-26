@@ -74,11 +74,14 @@ private Customer customer;
         customer.setLastName(lastName.getText().toString());
         customer.setEmailAddress(emailAddress.getText().toString());
         customer.setCreateNewAccount(createNewAccount.isChecked());
+
         AddressInformationFragment addressInformationFragment = new AddressInformationFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, customer);
         addressInformationFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment);
+        Log.i("Data saved", customer.getFirstName()+", "+ customer.isCreateNewAccount()+", "+ customer.getTitle()+", "+ customer.getGender());
+
     }
 
 
