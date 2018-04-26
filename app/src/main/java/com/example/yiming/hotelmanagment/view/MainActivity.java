@@ -22,24 +22,27 @@ import com.example.yiming.hotelmanagment.util.adapter.ViewPagerAdapter;
 import javax.crypto.Cipher;
 
 public class MainActivity extends AppCompatActivity {
+    TextView message;
     ViewPager viewPager;
     Toolbar toolbar;
 
+    FingerprintManager.CryptoObject cryptoObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //设置无标题栏
         setContentView(R.layout.activity_main);
         viewPager=findViewById(R.id.viewPager);
         toolbar=findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);   // disable tool bar title
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ViewPagerAdapter myAdapter=new ViewPagerAdapter(getSupportFragmentManager(),2);
         viewPager.setAdapter(myAdapter);
 
 
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);  //set titlebar opic
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);  //set navigationbar opic
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);  //透明状态栏
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);  //透明导航栏
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        menu.add(1, 1, 1, "menu_1");
         return super.onCreateOptionsMenu(menu);
     }
 

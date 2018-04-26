@@ -3,7 +3,6 @@ package com.example.yiming.hotelmanagment.view.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 
 public class PersonalInformationFragment extends Fragment implements View.OnClickListener {
@@ -74,8 +74,11 @@ private Customer customer;
         customer.setLastName(lastName.getText().toString());
         customer.setEmailAddress(emailAddress.getText().toString());
         customer.setCreateNewAccount(createNewAccount.isChecked());
-        Log.i("Data saved", customer.getFirstName()+", "+ customer.isCreateNewAccount()+", "+ customer.getTitle()+", "+ customer.getGender());
-
+        AddressInformationFragment addressInformationFragment = new AddressInformationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, customer);
+        addressInformationFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment);
     }
 
 
