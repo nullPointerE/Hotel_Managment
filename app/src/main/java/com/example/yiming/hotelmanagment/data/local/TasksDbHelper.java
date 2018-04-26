@@ -23,14 +23,25 @@ public class TasksDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+ CustomerTable.TABLE_NAME+" (" +
-                "CustomerId Integer primary key autoincrement," +
-                "firstName varchar," +
-                "lastName varchar," +
-                "numberOfCustomers Integer not null," +
-                "assignedRoom Integer," +
-                "phoneNumber Integer," +
-                "roomIsGuaranteed Integer not null default 0" +
+                CustomerTable.CustomerId+" Integer primary key autoincrement," +
+                CustomerTable.TITLE+" varchar,"+
+                CustomerTable.firstName+" varchar," +
+                CustomerTable.lastName+" varchar," +
+                CustomerTable.EMAILADDRESS+" varchar,"+
+                CustomerTable.GENDER+" varchar,"+
+                CustomerTable.COMPANYNAME+" varchar,"+
+                CustomerTable.ADDRESS+" varchar,"+
+                CustomerTable.CITY+" varchar,"+
+                CustomerTable.POSTALCODE+" varchar,"+
+                CustomerTable.COUNTRY+" varchar,"+
+                CustomerTable.phoneNumber+" varchar," +
+                CustomerTable.PURPOSEOFVISIT+" varchar,"+
+                CustomerTable.COMMENTS+" varchar,"+
+                CustomerTable.numberOfCustomers+" Integer," +
+                CustomerTable.assignedRoom+" Integer," +
+                CustomerTable.roomIsGuaranteed+" Integer default 0" +
                 ")");
+
 
     }
 

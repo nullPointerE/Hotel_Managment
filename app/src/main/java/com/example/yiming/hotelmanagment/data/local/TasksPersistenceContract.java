@@ -12,8 +12,21 @@ public class TasksPersistenceContract {
     public static abstract class CustomerTable implements BaseColumns {
         public static final String TABLE_NAME = "customer";
         public static final String CustomerId = "CustomerId";
+        public static final String TITLE = "title";
         public static final String firstName = "firstName";
         public static final String lastName = "lastName";
+//        private String title="", firstName="", middleName="", lastName="", emailAddress="", gender="", companyName="", address="";
+//        private String city="", postalCode="", country="", daytimePhone="", mobilePhone="",comments="", purposeOfVisit="";
+//        private boolean createNewAccount=false, isTermsAccepted=false;
+        public static final String EMAILADDRESS = "emailAddress";
+        public static final String GENDER = "gender";
+        public static final String COMPANYNAME = "companyName";
+        public static final String ADDRESS = "address";
+        public static final String CITY = "city";
+        public static final String POSTALCODE = "postalCode";
+        public static final String COUNTRY = "country";
+        public static final String COMMENTS = "comments";
+        public static final String PURPOSEOFVISIT = "purposeOfVisit";
         public static final String numberOfCustomers = "numberOfCustomers";
         public static final String assignedRoom = "assignedRoom";
         public static final String phoneNumber = "phoneNumber";

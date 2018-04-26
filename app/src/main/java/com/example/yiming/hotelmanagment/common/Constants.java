@@ -4,7 +4,7 @@ import com.example.yiming.hotelmanagment.R;
 
 public class Constants {
     public static final String KEY_NAME = "KEY_NAME";
-
+    public static final String GUEST_INFO_BUNDLE_KEY="GUEST_INFO";
     // boolean for sqlite
     public static final int isVacant =1;
     public static final int roomIsGuaranteed =1;
