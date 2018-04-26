@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
@@ -13,6 +12,8 @@ import com.example.yiming.hotelmanagment.common.Food;
 import com.example.yiming.hotelmanagment.common.Room;
 import com.example.yiming.hotelmanagment.data.TasksDataSource;
 import com.example.yiming.hotelmanagment.util.CheckNotNull;
+
+
 
 import java.util.Date;
 
@@ -89,6 +90,9 @@ public class TasksLocalDataSource implements TasksDataSource {
             Log.e("bookRoom ","room is booked or occupied");
             return false; // room is booked or occupied
         }
+        db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
+                        " where "+CustomerTable.customerId+"=?"
+                ,new Object[]{Constants.roomIsGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
 
         db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
                         RoomTable.expectCheckInDate+"=?,"+RoomTable.expectCheckoOutDate+"=?,"+RoomTable.actualCheckInDate+"=?," +
@@ -123,6 +127,11 @@ public class TasksLocalDataSource implements TasksDataSource {
             Log.e("roomCheckIn ","check in  later thant expectCheckoOutDate");
             return false; //check in  later thant expectCheckoOutDate;
         }
+
+        db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
+                        " where "+CustomerTable.customerId+"=?"
+                ,new Object[]{Constants.roomIsGuaranteed ,Constants.roomIsGuaranteed,owedByCustomer});
+
         db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
                         RoomTable.actualCheckInDate+"=?"+
                         " where "+RoomTable.roomNumber+"=?"
@@ -145,6 +154,10 @@ public class TasksLocalDataSource implements TasksDataSource {
             Log.e("roomCheckOut ","not checkIn yet");
             return false; // not checkIn yet
         }
+        db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
+                        " where "+CustomerTable.customerId+"=?"
+                ,new Object[]{Constants.roomNotGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
+
         db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
                         RoomTable.actualCheckOutDate+"=?"+
                         " where "+RoomTable.roomNumber+"=?"
@@ -167,6 +180,10 @@ public class TasksLocalDataSource implements TasksDataSource {
             Log.e("cancelRoom ","not checkIn yet");
             return false; // not checkIn yet
         }
+        db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
+                        " where "+CustomerTable.customerId+"=?"
+                ,new Object[]{Constants.roomNotGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
+
         db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
                         RoomTable.actualCheckOutDate+"=?"+
                         " where "+RoomTable.roomNumber+"=?"
@@ -272,22 +289,72 @@ public class TasksLocalDataSource implements TasksDataSource {
         return true;
     }
 
-    public Cursor getRoomById(int roomNumber){
+    public Room getRoomById(int roomNumber){
+        Room room=new Room();
         SQLiteDatabase db=mDbHelper.getReadableDatabase();
-        return db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor=db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        if(cursor.moveToFirst() && !cursor.isAfterLast()){
+            room.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTable.roomNumber)));
+            room.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTable.status)));
+            room.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTable.owedByCustomer)));
+            room.setPrice(cursor.getDouble(cursor.getColumnIndex(RoomTable.PRICE)));
+            room.setBeds(cursor.getInt(cursor.getColumnIndex(RoomTable.BEDS)));
+
+            room.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.autoCancelDate))));
+            room.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckInDate))));
+            room.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckoOutDate))));
+            room.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckInDate))));
+            room.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckOutDate))));
+        }
+        db.close();
+        return room;
     }
 
-    public Cursor getFoodById(int foodId){
+    public Food getFoodById(int foodId){
+        Food food=new Food();
         SQLiteDatabase db=mDbHelper.getReadableDatabase();
-        return db.query(FoodTable.TABLE_NAME,null,FoodTable.foodId+"=?",new String[]{String.valueOf(foodId)},null,null,null);
-    }
-    public Cursor getCustomerById(int customerId){
-        SQLiteDatabase db=mDbHelper.getReadableDatabase();
-        return db.query(CustomerTable.TABLE_NAME,null,CustomerTable.customerId+"=?",new String[]{String.valueOf(customerId)},null,null,null);
-    }
-    public void closeDB(){
-        SQLiteDatabase db=mDbHelper.getWritableDatabase();
+        Cursor cursor= db.query(FoodTable.TABLE_NAME,null,FoodTable.foodId+"=?",new String[]{String.valueOf(foodId)},null,null,null);
+        if(cursor.moveToFirst() && !cursor.isAfterLast()){
+            food.setFoodId(cursor.getInt(cursor.getColumnIndex(FoodTable.foodId)));
+            food.setFoodType(cursor.getString(cursor.getColumnIndex(FoodTable.foodType)));
+            food.setFoodName(cursor.getString(cursor.getColumnIndex(FoodTable.foodName)));
+            food.setPrice(cursor.getDouble(cursor.getColumnIndex(FoodTable.PRICE)));
+            food.setPayed(cursor.getInt(cursor.getColumnIndex(FoodTable.status)));
+        }
         db.close();
+        return food;
     }
+    public Customer getCustomerById(int customerId){
+        Customer customer=new Customer();
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        Cursor cursor= db.query(CustomerTable.TABLE_NAME,null,CustomerTable.customerId+"=?",new String[]{String.valueOf(customerId)},null,null,null);
+        if(cursor.moveToFirst() && !cursor.isAfterLast()){
+            customer.setTitle(cursor.getString(cursor.getColumnIndex(CustomerTable.title)));
+            customer.setFirstName(cursor.getString(cursor.getColumnIndex(CustomerTable.firstName)));
+            customer.setMiddleName(cursor.getString(cursor.getColumnIndex(CustomerTable.middleName)));
+            customer.setLastName(cursor.getString(cursor.getColumnIndex(CustomerTable.lastName)));
+            customer.setEmailAddress(cursor.getString(cursor.getColumnIndex(CustomerTable.emailAddress)));
+            customer.setGender(cursor.getString(cursor.getColumnIndex(CustomerTable.gender)));
+            customer.setCompanyName(cursor.getString(cursor.getColumnIndex(CustomerTable.companyName)));
+            customer.setAddress(cursor.getString(cursor.getColumnIndex(CustomerTable.address)));
+            customer.setCreditCard(cursor.getString(cursor.getColumnIndex(CustomerTable.creditCard)));
+
+            customer.setCity(cursor.getString(cursor.getColumnIndex(CustomerTable.city)));
+            customer.setPostalCode(cursor.getString(cursor.getColumnIndex(CustomerTable.postalCode)));
+            customer.setCountry(cursor.getString(cursor.getColumnIndex(CustomerTable.country)));
+            customer.setDaytimePhone(cursor.getString(cursor.getColumnIndex(CustomerTable.daytimePhone)));
+            customer.setMobilePhone(cursor.getString(cursor.getColumnIndex(CustomerTable.mobilePhone)));
+            customer.setComments(cursor.getString(cursor.getColumnIndex(CustomerTable.comments)));
+            customer.setPurposeOfVisit(cursor.getString(cursor.getColumnIndex(CustomerTable.purposeOfVisit)));
+
+            customer.setCustomerId(cursor.getInt(cursor.getColumnIndex(CustomerTable.customerId)));
+            customer.setNumberOfCustomers(cursor.getInt(cursor.getColumnIndex(CustomerTable.numberOfCustomers)));
+            customer.setAssignedRoom(cursor.getInt(cursor.getColumnIndex(CustomerTable.assignedRoom)));
+            customer.setRoomIsGuaranteed(cursor.getInt(cursor.getColumnIndex(CustomerTable.roomIsGuaranteed)));
+        }
+        db.close();
+        return customer;
+    }
+
 }
 
