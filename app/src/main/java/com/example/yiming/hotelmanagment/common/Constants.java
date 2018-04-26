@@ -13,7 +13,8 @@ public class Constants {
     public static final int isBooked = 1;
     public static final int isCheckIn = 2;
     public static final long autoCancellTime=86400000; // one day milliSecond
-
+    public static final String  EPLOYEE_BASE_URL="http://rjtmobile.com/ansari/hms/hmsapp/";
+    public static final String EMPLOYEE_END_URL="hms_emp_info.php";
     //  customer status
     public static final int roomIsGuaranteed =1;
     public static final int roomNotGuaranteed =0;
@@ -35,4 +36,6 @@ public class Constants {
     public static final int EMPTY=0;
     public static final int ORDER=1;
     public static final int STAY=2;
+
+
 }
