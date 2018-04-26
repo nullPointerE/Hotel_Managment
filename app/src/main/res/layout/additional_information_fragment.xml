@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/additional_info_purposeOfVisit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:text="Purpose Of Visit" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight">
+
+        <RadioButton
+            android:id="@+id/additional_info_bussiness_radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/additional_info_bussiness_radioText" />
+
+        <RadioButton
+            android:id="@+id/additional_info_leisure_radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/additional_info_leisure_radioText" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/additional_info_commentsET"
+        android:layout_width="348dp"
+        android:layout_height="306dp"
+        android:gravity="top"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:background="@drawable/edittext_background"
+        android:ems="10"
+        android:hint="@string/additional_info_commentsET"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/viewPadding" />
+
+    <CheckBox
+        android:id="@+id/additional_info_terms_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:text="Agreed to the Terms and Conditions." />
+
+    <Button
+        android:id="@+id/additional_info_submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:background="@drawable/button_bg_gradient"
+        android:textColor="@color/white"
+        android:text="@string/additional_info_button_text" />
+
+
+</LinearLayout>

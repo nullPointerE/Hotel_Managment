@@ -1,4 +1,3 @@
-package com.example.yiming.hotelmanagment.common;
 
 public class Customer {
     private String title, firstName,middleName, lastName,emailAddress, gender, companyName, address,creditCard;
@@ -39,7 +38,6 @@ public class Customer {
     public void setAssignedRoom(int assignedRoom) {
         this.assignedRoom = assignedRoom;
     }
-
     public int isRoomIsGuaranteed() {
         return roomIsGuaranteed;
     }
@@ -175,6 +173,7 @@ public class Customer {
     public void setPurposeOfVisit(String purposeOfVisit) {
         this.purposeOfVisit = purposeOfVisit;
     }
+
 
     public boolean isCreateNewAccount() {
         return createNewAccount;

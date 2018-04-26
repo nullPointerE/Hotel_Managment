@@ -18,4 +18,16 @@
         <item>Female</item>
     </string-array>
     <string name="book">BOOK</string>
+    <string name="address_info_companyName_hint">Company Name</string>
+    <string name="address_info_city_hintText">City*</string>
+    <string name="address_info_postaCode_hintText">Postal Code*</string>
+    <string name="address_info_daytimePhone_hintText">Day Time Phone*</string>
+    <string name="address_info_mobileEt_hintText">Mobile Phone</string>
+    <string name="address_info_address_hintText">Address*</string>
+    <string name="address_info_country_text">Country*</string>
+    <string name="address_info_continueButton_text">Continue</string>
+    <string name="additional_info_commentsET">Comments</string>
+    <string name="additional_info_bussiness_radioText">Bussiness</string>
+    <string name="additional_info_leisure_radioText">Leisure</string>
+    <string name="additional_info_button_text">Submit</string>
 </resources>

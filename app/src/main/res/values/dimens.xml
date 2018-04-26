@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="personal_information_view_margin">10dp</dimen>
+    <dimen name="personal_information_view_marginTopBottom">10dp</dimen>
     <dimen name="editText_borderSize">1dp</dimen>
     <dimen name="viewPadding">10dp</dimen>
 
     <dimen name="toolBarHeight">150dp</dimen>
+    <dimen name="personal_information_view_marginLeftRight">20dp</dimen>
+    <dimen name="address_info_addressET_height">84dp</dimen>
 </resources>
