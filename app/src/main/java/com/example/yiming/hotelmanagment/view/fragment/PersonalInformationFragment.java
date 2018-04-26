@@ -15,19 +15,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
-import com.example.yiming.hotelmanagment.common.GuestInformation;
+import com.example.yiming.hotelmanagment.common.Customer;
 
 public class PersonalInformationFragment extends Fragment implements View.OnClickListener {
 private TextView firstName, middleName, lastName, emailAddress, emailAddressConfirmation;
 private Spinner title, gender;
 private CheckBox createNewAccount;
 private Button continueButton;
-private GuestInformation guestInformation;
+private Customer customer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        guestInformation = new GuestInformation();
+        customer = new Customer();
     }
 
     @Nullable
@@ -46,7 +46,7 @@ private GuestInformation guestInformation;
         title.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                guestInformation.setTitle(adapterView.getItemAtPosition(pos).toString());
+                customer.setTitle(adapterView.getItemAtPosition(pos).toString());
 
             }
         });
@@ -56,7 +56,7 @@ private GuestInformation guestInformation;
         gender.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                guestInformation.setGender(adapterView.getItemAtPosition(pos).toString());
+                customer.setGender(adapterView.getItemAtPosition(pos).toString());
             }
         });
         createNewAccount = view.findViewById(R.id.personal_info_createNewAccoutCB);
@@ -69,12 +69,12 @@ private GuestInformation guestInformation;
     @Override
     public void onClick(View view) {
         //call Validations..
-        guestInformation.setFirstName(firstName.getText().toString());
-        guestInformation.setMiddleName(middleName.getText().toString());
-        guestInformation.setLastName(lastName.getText().toString());
-        guestInformation.setEmailAddress(emailAddress.getText().toString());
-        guestInformation.setCreateNewAccount(createNewAccount.isChecked());
-        Log.i("Data saved", guestInformation.getFirstName()+", "+ guestInformation.isCreateNewAccount()+", "+guestInformation.getTitle()+", "+guestInformation.getGender());
+        customer.setFirstName(firstName.getText().toString());
+        customer.setMiddleName(middleName.getText().toString());
+        customer.setLastName(lastName.getText().toString());
+        customer.setEmailAddress(emailAddress.getText().toString());
+        customer.setCreateNewAccount(createNewAccount.isChecked());
+        Log.i("Data saved", customer.getFirstName()+", "+ customer.isCreateNewAccount()+", "+ customer.getTitle()+", "+ customer.getGender());
 
     }
 

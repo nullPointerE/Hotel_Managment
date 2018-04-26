@@ -36,7 +36,7 @@ public class AdapterWeek extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView tv;
         if(convertView==null){
-            convertView= LayoutInflater.from(context).inflate(R.layout.item_calendar,null);
+            convertView= LayoutInflater.from(context).inflate(R.layout.calendar_item,null);
         }
         tv=convertView.findViewById(R.id.tvWeek);
         tv.setText(week[position]);

@@ -66,7 +66,7 @@ public class AdapterDate extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView==null){
-            convertView= LayoutInflater.from(context).inflate(R.layout.item_calendar,parent,false);
+            convertView= LayoutInflater.from(context).inflate(R.layout.calendar_item,parent,false);
             viewHolder=new ViewHolder();
             convertView.setTag(viewHolder);
         }else{
