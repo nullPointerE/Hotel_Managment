@@ -7,7 +7,7 @@
     <color name="colorBorder">#aeaeae</color>
     <color name="colorSecondaryText">#6e6e6e</color>
     <color name="colorButtonText">#fff</color>
-    <color name="black">#000</color>
+    <color name="black">#000000</color>
     <color name="tranparent">#633e3d3d</color>
     <color name="si_default_text_color">#FF0000</color>
     <color name="si_default_text_color_selected">#FF00FF</color>

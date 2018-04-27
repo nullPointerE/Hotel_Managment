@@ -15,7 +15,7 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="week"
-        android:textColor="#666" />
+        android:textColor="#000" />
 
     <ImageView
         android:id="@+id/ivStatus"

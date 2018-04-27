@@ -39,6 +39,5 @@ public class Splasher extends AppCompatActivity {
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         video.setLayoutParams(layoutParams);
         video.start();
-
     }
 }

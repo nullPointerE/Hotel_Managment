@@ -5,7 +5,6 @@
         android:width="@dimen/editText_borderSize"
         android:color="@color/colorBorder"
         />
-
     <corners
         android:radius="8dp"/>
 </shape>
