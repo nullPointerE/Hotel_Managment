@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CalendarDialog extends DialogFragment  {
-    private ViewPager viewPager;
     Spinner avaliable_roomNumber;
     Spinner book_customer;
     Button commit_book;
@@ -39,7 +38,7 @@ public class CalendarDialog extends DialogFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.calendar_viewpager,container,false);
-        viewPager=v.findViewById(R.id.viewPager);
+        ViewPager viewPager = v.findViewById(R.id.viewPager);
         avaliable_roomNumber=v.findViewById(R.id.avaliable_roomNumber);
         book_customer=v.findViewById(R.id.book_customer);
         commit_book=v.findViewById(R.id.commit_book);
