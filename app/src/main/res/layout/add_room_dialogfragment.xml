@@ -4,81 +4,82 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
-        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
-        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
-        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
-        android:weightSum="1"
-        android:ems="10"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/room_number2"
-            />
-        <Spinner
-            android:id="@+id/avaliable_roomNumber"
-            android:background="@color/colorButtonText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
-        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
-        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
-        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
-        android:weightSum="1"
-        android:ems="10"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/customer_name"/>
-        <Spinner
-            android:id="@+id/book_customer"
-            android:layout_width="match_parent"
-            android:background="@color/colorButtonText"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
     <TextView
-        android:id="@+id/totalPrice"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:text="@string/how_many_beds" />
+
+    <Spinner
+        android:id="@+id/addbeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        />
+
+    <EditText
+        android:id="@+id/roomNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
         android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
         android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
         android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:ems="10"
+        android:padding="@dimen/viewPadding"
+        android:inputType="number"
+        android:background="@drawable/edittext_background"
+        android:hint="@string/room_number" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
         android:weightSum="1"
-        android:padding="8dp"
         android:ems="10"
         android:background="@drawable/edittext_background"
-        android:text="Total Price:$"
-        />
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/viewPadding"
+            android:textSize="18sp"
+            android:text="Price: $"/>
+        <TextView
+            android:id="@+id/addprice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="110"
+            android:padding="@dimen/viewPadding"
+            />
+    </LinearLayout>
+
 
 
     <Button
-        android:id="@+id/commit_book"
+        android:id="@+id/addRoom_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/book"
         android:padding="@dimen/viewPadding"
         android:layout_marginTop="@dimen/personal_information_view_marginTopBottom"
         android:layout_marginBottom="@dimen/personal_information_view_marginTopBottom"
         android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
         android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
         android:background="@drawable/button_bg_gradient"
-        android:textColor="@color/colorButtonText"/>
+        android:textColor="@color/colorButtonText"
+        android:text="Add Room" />
 
 </LinearLayout>

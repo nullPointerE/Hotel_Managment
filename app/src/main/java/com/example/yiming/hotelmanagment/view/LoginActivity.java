@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements IViewActivityLog
     @Override
     public void onSuccess() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override

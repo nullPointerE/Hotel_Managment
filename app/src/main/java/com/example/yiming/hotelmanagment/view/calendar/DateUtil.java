@@ -1,5 +1,7 @@
 package com.example.yiming.hotelmanagment.view.calendar;
 
+import android.util.Log;
+
 import java.util.Calendar;
 
 public class DateUtil {
@@ -11,18 +13,13 @@ public class DateUtil {
         return maxDate;
     }
 
-    public static String getCurrentYearAndMonth(){
+    public static int[]  getCurrentYearAndMonth(){
         Calendar calendar = Calendar.getInstance();
         int year=calendar.get(Calendar.YEAR);
         int month=calendar.get(Calendar.MONTH)+1;
-        return year+"-"+month;
+        return new int[]{year,month};
     }
 
-    public static int getFirstDayOfMonth(){
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.DATE,1); //goto first day of month
-        return calendar.get(Calendar.DAY_OF_WEEK)-1;
-    }
 
     public static int getMonthDays(int year, int month) {
         switch (month) {
@@ -50,4 +47,20 @@ public class DateUtil {
         }
     }
 
+    public static int[] positionToDate(int position, int startY, int startM) {
+        int year = position / 12 + startY;
+        int month = position % 12 + startM;
+
+        if (month > 12) {
+            month = month % 12;
+            year = year + 1;
+        }
+
+        return new int[]{year, month};
+    }
+
+    public static int[] getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        return new int[]{calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)};
+    }
 }

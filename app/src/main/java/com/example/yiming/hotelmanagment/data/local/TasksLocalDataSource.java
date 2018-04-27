@@ -14,8 +14,9 @@ import com.example.yiming.hotelmanagment.data.TasksDataSource;
 import com.example.yiming.hotelmanagment.util.CheckNotNull;
 
 
-
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract.*;
 import static com.example.yiming.hotelmanagment.util.CheckNotNull.checkNotNull;
@@ -292,7 +293,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     public Room getRoomById(int roomNumber){
         Room room=new Room();
         SQLiteDatabase db=mDbHelper.getReadableDatabase();
-        Cursor cursor=db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor=db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"= ? ",new String[]{String.valueOf(roomNumber)},null,null,null);
         if(cursor.moveToFirst() && !cursor.isAfterLast()){
             room.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTable.roomNumber)));
             room.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTable.status)));
@@ -310,6 +311,29 @@ public class TasksLocalDataSource implements TasksDataSource {
         return room;
     }
 
+    public List<Room> getRoomListByBeds(int beds){
+        List<Room> roomList=new ArrayList<>();
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        Cursor cursor=db.query(RoomTable.TABLE_NAME,null,RoomTable.BEDS+"= ? ",new String[]{String.valueOf(beds)},null,null,null);
+        for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
+            Room room=new Room();
+            room.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTable.roomNumber)));
+            room.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTable.status)));
+            room.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTable.owedByCustomer)));
+            room.setPrice(cursor.getDouble(cursor.getColumnIndex(RoomTable.PRICE)));
+            room.setBeds(cursor.getInt(cursor.getColumnIndex(RoomTable.BEDS)));
+
+            room.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.autoCancelDate))));
+            room.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckInDate))));
+            room.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckoOutDate))));
+            room.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckInDate))));
+            room.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckOutDate))));
+            roomList.add(room);
+        }
+        db.close();
+
+        return roomList;
+    }
     public Food getFoodById(int foodId){
         Food food=new Food();
         SQLiteDatabase db=mDbHelper.getReadableDatabase();
@@ -354,6 +378,40 @@ public class TasksLocalDataSource implements TasksDataSource {
         }
         db.close();
         return customer;
+    }
+
+    public List<Customer> getCustomerList(){
+        List<Customer> customerList=new ArrayList<>();
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        Cursor cursor= db.query(CustomerTable.TABLE_NAME,null,null,null,null,null,null);
+        for(cursor.moveToFirst() ;!cursor.isAfterLast();cursor.moveToNext()){
+            Customer customer=new Customer();
+            customer.setTitle(cursor.getString(cursor.getColumnIndex(CustomerTable.title)));
+            customer.setFirstName(cursor.getString(cursor.getColumnIndex(CustomerTable.firstName)));
+            customer.setMiddleName(cursor.getString(cursor.getColumnIndex(CustomerTable.middleName)));
+            customer.setLastName(cursor.getString(cursor.getColumnIndex(CustomerTable.lastName)));
+            customer.setEmailAddress(cursor.getString(cursor.getColumnIndex(CustomerTable.emailAddress)));
+            customer.setGender(cursor.getString(cursor.getColumnIndex(CustomerTable.gender)));
+            customer.setCompanyName(cursor.getString(cursor.getColumnIndex(CustomerTable.companyName)));
+            customer.setAddress(cursor.getString(cursor.getColumnIndex(CustomerTable.address)));
+            customer.setCreditCard(cursor.getString(cursor.getColumnIndex(CustomerTable.creditCard)));
+
+            customer.setCity(cursor.getString(cursor.getColumnIndex(CustomerTable.city)));
+            customer.setPostalCode(cursor.getString(cursor.getColumnIndex(CustomerTable.postalCode)));
+            customer.setCountry(cursor.getString(cursor.getColumnIndex(CustomerTable.country)));
+            customer.setDaytimePhone(cursor.getString(cursor.getColumnIndex(CustomerTable.daytimePhone)));
+            customer.setMobilePhone(cursor.getString(cursor.getColumnIndex(CustomerTable.mobilePhone)));
+            customer.setComments(cursor.getString(cursor.getColumnIndex(CustomerTable.comments)));
+            customer.setPurposeOfVisit(cursor.getString(cursor.getColumnIndex(CustomerTable.purposeOfVisit)));
+
+            customer.setCustomerId(cursor.getInt(cursor.getColumnIndex(CustomerTable.customerId)));
+            customer.setNumberOfCustomers(cursor.getInt(cursor.getColumnIndex(CustomerTable.numberOfCustomers)));
+            customer.setAssignedRoom(cursor.getInt(cursor.getColumnIndex(CustomerTable.assignedRoom)));
+            customer.setRoomIsGuaranteed(cursor.getInt(cursor.getColumnIndex(CustomerTable.roomIsGuaranteed)));
+            customerList.add(customer);
+        }
+        db.close();
+        return customerList;
     }
 
 }

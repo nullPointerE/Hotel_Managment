@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.util.adapter.ViewPagerAdapter;
+import com.example.yiming.hotelmanagment.view.fragment.AddRoomDialog;
 
 
 import javax.crypto.Cipher;
@@ -30,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewPager=findViewById(R.id.viewPager);
-        toolbar=findViewById(R.id.toolBar);
+        viewPager = findViewById(R.id.viewPager);
+        toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);   // disable tool bar title
 
-        ViewPagerAdapter myAdapter=new ViewPagerAdapter(getSupportFragmentManager(),2);
+        ViewPagerAdapter myAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 2);
         viewPager.setAdapter(myAdapter);
 
 
@@ -53,14 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.item1:
-                startActivity(new Intent(this, ManagerScreenActivity.class));
-                return true;
-            case R.id.item2:
-                return true;
-                default:
-                    return false;
+        switch (item.getItemId()) {
+            case R.id.customer:
+                startActivity(new Intent(this, GuestInformationActivity.class));
+                break;
+            case R.id.manager:
+                startActivity(new Intent(this, null));
+                break;
+            case R.id.addRoom:
+                AddRoomDialog addRoomDialog=new AddRoomDialog();
+                addRoomDialog.show(getFragmentManager(),"addRoom");
         }
+        return super.onOptionsItemSelected(item);
     }
 }

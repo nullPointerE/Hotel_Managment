@@ -60,6 +60,12 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 customer.setGender(adapterView.getItemAtPosition(pos).toString());
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
         });
         createNewAccount = view.findViewById(R.id.personal_info_createNewAccoutCB);
         continueButton = view.findViewById(R.id.personal_info_continue_button);
@@ -80,7 +86,7 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
         addressInformationFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment);
+        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment).commit();
     }
 
 
