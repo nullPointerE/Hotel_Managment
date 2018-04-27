@@ -43,6 +43,7 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
 
         ArrayAdapter<CharSequence> titleAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.title, android.R.layout.simple_spinner_item);
         titleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        title.setAdapter(titleAdapter);
         title.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -53,6 +54,7 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         gender = view.findViewById(R.id.personal_info_genderSpinner);
         ArrayAdapter<CharSequence> genderAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gender.setAdapter(genderAdapter);
         gender.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {

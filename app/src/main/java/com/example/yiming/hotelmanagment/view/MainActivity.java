@@ -1,5 +1,6 @@
 package com.example.yiming.hotelmanagment.view;
 
+import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -50,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.item1:
+                startActivity(new Intent(this, ManagerScreenActivity.class));
+                return true;
+            case R.id.item2:
+                return true;
+                default:
+                    return false;
+        }
+    }
 }

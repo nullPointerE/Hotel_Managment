@@ -16,10 +16,10 @@ import java.util.List;
 
 public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdapter.MyViewHolder>{
 
-    private List<Employee> employees;
+    private Employee employees;
     private Context context;
 
-    public ManagerScreenAdapter(List<Employee> employees, Context context) {
+    public ManagerScreenAdapter(Employee employees, Context context) {
         this.employees = employees;
         this.context = context;
     }
@@ -33,14 +33,14 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Employee employee = employees.get(position);
-        holder.employeeName.setText(employee.getEmployeeName());
-        holder.employeePay.setText(employee.getEmployeeSalary());
+
+        holder.employeeName.setText(employees.getRoomDetailsBeans().get(position).get_$EmployeeName224());
+        holder.employeePay.setText(employees.getRoomDetailsBeans().get(position).get_$EmployeeSalary273());
     }
 
     @Override
     public int getItemCount() {
-        return employees.size();
+        return employees.getRoomDetailsBeans().size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

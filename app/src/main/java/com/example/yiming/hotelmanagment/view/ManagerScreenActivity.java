@@ -17,6 +17,9 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ManagerScreenActivity extends AppCompatActivity {
@@ -35,17 +38,23 @@ private ManagerScreenAdapter managerScreenAdapter;
         employeeRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         employeeRecyclerView.setLayoutManager(linearLayoutManager);
-        retrofit = EmployeeRetrofitInstance.getEmployeeRetrofitInstance();
-        retrofit.create(EmployeeAPIService.class).getEmployees()
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleResult, this::handleError);
+
+        EmployeeAPIService apiService = EmployeeRetrofitInstance.getEmployeeRetrofitInstance().create(EmployeeAPIService.class);
+
+        Call<Employee> employeeCall = apiService.getEmployees();
+        employeeCall.enqueue(new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                Log.i("Response", "Size"+ response.body().getRoomDetailsBeans().size());
+                Log.i("URL", ""+response.raw().request().url());
+            }
+
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                Log.i("Response", t.getMessage());
+            }
+        });
+
     }
 
-    private void handleResult(List<Employee> employees) {
-        managerScreenAdapter = new ManagerScreenAdapter(employees, this);
-        employeeRecyclerView.setAdapter(managerScreenAdapter);
-    }
-    private void handleError(Throwable throwable) {
-        Log.i("handleResult ", "error");
-    }
 }
