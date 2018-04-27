@@ -39,6 +39,9 @@
     <string name="additional_info_leisure_radioText">Leisure</string>
     <string name="additional_info_button_text">Submit</string>
     <string name="client">Client</string>
+    <string name="manager_screen_toolbar_title">Manager</string>
+    <string name="employee_recyclerview_employeename_text">Name</string>
+    <string name="employee_recyclerview_pay_text">Pay</string>
     <string name="check_in">Check In</string>
     <string name="check_out">Check Out</string>
     <string name="cancel">Cancel</string>
