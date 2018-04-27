@@ -20,10 +20,10 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class ManagerScreenActivity extends AppCompatActivity {
-private android.support.v7.widget.Toolbar toolbar;
-private RecyclerView employeeRecyclerView;
-private Retrofit retrofit;
-private ManagerScreenAdapter managerScreenAdapter;
+    private android.support.v7.widget.Toolbar toolbar;
+    private RecyclerView employeeRecyclerView;
+    private Retrofit retrofit;
+    private ManagerScreenAdapter managerScreenAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,6 +2,7 @@ package com.example.yiming.hotelmanagment.view.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ private Customer customer;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_guest_information, null);
+        View view = inflater.inflate(R.layout.address_information_fragment, null);
         companyName = view.findViewById(R.id.address_info_companyNameET);
         city = view.findViewById(R.id.address_info_cityET);
         postalCode = view.findViewById(R.id.address_info_postalCodeET);
@@ -57,11 +58,17 @@ private Customer customer;
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, countries);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         country.setAdapter(countryAdapter);
-        country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                customer.setCountry(adapterView.getItemAtPosition(i).toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                customer.setCountry(parent.getItemAtPosition(position).toString());
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
         });
         continueButton.setOnClickListener(this);
         return view;
@@ -76,5 +83,10 @@ private Customer customer;
         customer.setPostalCode(postalCode.getText().toString());
         customer.setDaytimePhone(dayTimePhone.getText().toString());
         customer.setMobilePhone(mobilePhone.getText().toString());
+        AdditionalInformationFragment additionalInformationFragment = new AdditionalInformationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
+        additionalInformationFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, additionalInformationFragment).commit();
     }
 }

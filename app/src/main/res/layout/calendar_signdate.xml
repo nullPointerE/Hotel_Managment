@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     android:background="@android:color/white">
     <TextView
         android:id="@+id/tvYear"
@@ -13,7 +13,7 @@
         android:text="2018-4"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorPrimaryDark"/>
 
     <com.example.yiming.hotelmanagment.view.calendar.InnerGridView
         android:id="@+id/gvWeek"

@@ -17,6 +17,14 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <integer-array name="beds">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+    </integer-array>
+
     <string name="book">BOOK</string>
     <string name="address_info_companyName_hint">Company Name</string>
     <string name="address_info_city_hintText">City*</string>
@@ -31,6 +39,19 @@
     <string name="additional_info_leisure_radioText">Leisure</string>
     <string name="additional_info_button_text">Submit</string>
     <string name="client">Client</string>
+    <string name="check_in">Check In</string>
+    <string name="check_out">Check Out</string>
+    <string name="cancel">Cancel</string>
+    <string name="home">Home</string>
+    <string name="customer">Customer</string>
+    <string name="manager">Manager</string>
+    <string name="add_room">Add Room</string>
+    <string name="add_room_information">Add Room Information</string>
+    <string name="how_many_beds">How many beds</string>
+    <string name="room_number">Room Number</string>
+    <string name="room_number2">Room Number:</string>
+    <string name="customer_id">Customer ID:</string>
+    <string name="customer_name">Customer Name</string>
     <string name="manager_screen_toolbar_title">Manager</string>
     <string name="employee_recyclerview_employeename_text">Name</string>
     <string name="employee_recyclerview_pay_text">Pay</string>

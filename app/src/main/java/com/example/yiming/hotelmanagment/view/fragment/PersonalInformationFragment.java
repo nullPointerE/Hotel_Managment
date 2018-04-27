@@ -43,21 +43,35 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
 
         ArrayAdapter<CharSequence> titleAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.title, android.R.layout.simple_spinner_item);
         titleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        title.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        title.setAdapter(titleAdapter);
+        title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                customer.setTitle(adapterView.getItemAtPosition(pos).toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                customer.setTitle(parent.getItemAtPosition(position).toString());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
         gender = view.findViewById(R.id.personal_info_genderSpinner);
         ArrayAdapter<CharSequence> genderAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gender.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gender.setAdapter(genderAdapter);
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                customer.setGender(adapterView.getItemAtPosition(pos).toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                customer.setGender(parent.getItemAtPosition(position).toString());
+
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
         });
         createNewAccount = view.findViewById(R.id.personal_info_createNewAccoutCB);
         continueButton = view.findViewById(R.id.personal_info_continue_button);
@@ -78,7 +92,7 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
         addressInformationFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment);
+        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, addressInformationFragment).commit();
     }
 
 

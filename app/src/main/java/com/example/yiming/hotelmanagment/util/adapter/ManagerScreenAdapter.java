@@ -44,8 +44,8 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-    ImageView employeeImage;
-    TextView employeeName, employeePay;
+        ImageView employeeImage;
+        TextView employeeName, employeePay;
         public MyViewHolder(View itemView) {
             super(itemView);
             employeeImage = itemView.findViewById(R.id.employeeImg);

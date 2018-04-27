@@ -28,14 +28,13 @@ public class Constants {
     public static final String BOOKED="BOOKED";
 
     //fake information for room
-    public static final int[]  PRRICE={330,540,1000};
-    public static final int[]  BEDS={2,3,5};
-    public static final int[]  PIC={R.drawable.r1,R.drawable.r2,R.drawable.r3};
-
-    // room status on calendar
-    public static final int EMPTY=0;
-    public static final int ORDER=1;
-    public static final int STAY=2;
+    public static final int[]  PRRICE={300,330,540,720};
+    public static final int[]  BEDS={1,2,3,5};
+    public static final int[]  PIC={R.drawable.r1,R.drawable.r2,R.drawable.r3,R.drawable.r4};
 
 
+    //date click flag
+    public static final int notClick =0;
+    public static final int clicked = 1;
+    public static final int betweenClick=2;
 }
