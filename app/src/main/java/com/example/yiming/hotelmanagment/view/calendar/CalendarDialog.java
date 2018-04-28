@@ -50,7 +50,7 @@ public class CalendarDialog extends DialogFragment  {
         singlePrice=getArguments().getDouble("singlePrice");
 
         calendarPagerAdapter=new CalendarPagerAdapter(getActivity(),totalPrice,singlePrice);
-        viewPager.setAdapter(calendarPagerAdapter); 
+        viewPager.setAdapter(calendarPagerAdapter);
         ArrayList<String> aval_roomNumber=new ArrayList<>();
         ArrayList<String> boo_customer=new ArrayList<>();
         ArrayList<Room> roomlist= (ArrayList<Room>) TasksLocalDataSource.getInstance(getActivity()).getRoomListByBeds(beds);
