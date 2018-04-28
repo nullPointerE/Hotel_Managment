@@ -35,11 +35,6 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.imageView.setImageResource(Constants.PIC[position]);
         holder.beds.setText(Constants.BEDS[position]+"");
-        holder.booking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
     }
 
     @Override

@@ -61,11 +61,6 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
                 customer.setGender(adapterView.getItemAtPosition(pos).toString());
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
         });
         createNewAccount = view.findViewById(R.id.personal_info_createNewAccoutCB);
         continueButton = view.findViewById(R.id.personal_info_continue_button);

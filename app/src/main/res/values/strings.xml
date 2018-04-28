@@ -55,4 +55,11 @@
     <string name="room_number2">Room Number:</string>
     <string name="customer_id">Customer ID:</string>
     <string name="customer_name">Customer Name</string>
+    <string name="booked_room_edit_degreeOfLightsTVTitle">Degree of Lights</string>
+    <string name="turnTvTitle_text">TV</string>
+    <string name="meals_title_text">Meals</string>
+    <string name="editMealsText">Edit</string>
+    <string name="breakfast_tv_text">Break Fast</string>
+    <string name="lunchTv_text">Lunch</string>
+    <string name="dinnerTv_text">Dinner</string>
 </resources>
