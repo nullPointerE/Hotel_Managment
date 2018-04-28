@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.common.RoomHist;
+
+import java.util.List;
 
 public class SignDate extends LinearLayout {
     private TextView tvYear;
@@ -41,4 +44,7 @@ public class SignDate extends LinearLayout {
         adapterDate.setChangeStatusListener(changeStatusListener);
     }
 
+    public void updateCalendar(List<RoomHist> historyForCalendar) {
+        adapterDate.updateDateCalendar(historyForCalendar);
+    }
 }

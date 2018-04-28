@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -18,6 +19,7 @@ import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 import com.example.yiming.hotelmanagment.common.Room;
+import com.example.yiming.hotelmanagment.common.RoomHist;
 import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class CalendarDialog extends DialogFragment  {
     ArrayAdapter<String> custAdapter;
     CalendarPagerAdapter calendarPagerAdapter;
     ArrayList<Customer> customerList;
+    List<RoomHist> historyForCalendar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +51,9 @@ public class CalendarDialog extends DialogFragment  {
 
         beds=getArguments().getInt(Constants.ROOMS);
         singlePrice=getArguments().getDouble("singlePrice");
-
         calendarPagerAdapter=new CalendarPagerAdapter(getActivity(),totalPrice,singlePrice);
         viewPager.setAdapter(calendarPagerAdapter);
+
         ArrayList<String> aval_roomNumber=new ArrayList<>();
         ArrayList<String> boo_customer=new ArrayList<>();
         ArrayList<Room> roomlist= (ArrayList<Room>) TasksLocalDataSource.getInstance(getActivity()).getRoomListByBeds(beds);
@@ -70,6 +73,20 @@ public class CalendarDialog extends DialogFragment  {
         custAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         avaliable_roomNumber.setAdapter(roomAdapter);
+        avaliable_roomNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int selectedNumber= Integer.valueOf((String) parent.getSelectedItem());
+                historyForCalendar=TasksLocalDataSource.getInstance(getActivity()).getTransactionByRoomNumber(selectedNumber);
+                calendarPagerAdapter.updateCalendar(historyForCalendar);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
         book_customer.setAdapter(custAdapter);
 
         commit_book.setOnClickListener(new View.OnClickListener() {
@@ -77,14 +94,16 @@ public class CalendarDialog extends DialogFragment  {
             public void onClick(View v) {
                 //book room
                 clickDateList=calendarPagerAdapter.getClickDateList();
-                if(clickDateList[0]==null || clickDateList[1]==null){
+                if(clickDateList[0]==null || clickDateList[1]==null ){
                     Toast.makeText(getActivity(),"not set date",Toast.LENGTH_LONG).show();
                 }else{
-                    int roomNumber=Integer.valueOf(avaliable_roomNumber.getSelectedItem().toString());
-                    int custNumber=customerList.get(book_customer.getSelectedItemPosition()).getCustomerId();
-                    Log.i("commit_book ", roomNumber+" "+custNumber);
-                    TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));
-                    dismiss();
+                    if(avaliable_roomNumber.getSelectedItem()!=null && book_customer.getSelectedItem()!=null ){
+                        int roomNumber=Integer.valueOf(avaliable_roomNumber.getSelectedItem().toString());
+                        int custNumber=customerList.get(book_customer.getSelectedItemPosition()).getCustomerId();
+                        Log.i("commit_book ", roomNumber+" "+custNumber);
+                        TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));
+                        dismiss();
+                    }
                 }
             }
         });

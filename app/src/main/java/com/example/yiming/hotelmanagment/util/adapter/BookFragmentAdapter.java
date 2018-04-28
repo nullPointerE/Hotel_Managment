@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
+import com.example.yiming.hotelmanagment.common.Customer;
 import com.example.yiming.hotelmanagment.common.Room;
 import com.example.yiming.hotelmanagment.common.RoomHist;
 import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
@@ -30,6 +31,8 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
         mainActivity= (MainActivity) context;
         bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
     }
+
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,8 +43,11 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.imageView.setImageResource(Constants.PIC[position]);
-        holder.beds.setText(Constants.BEDS[position]+"");
+        holder.imageView.setImageResource(Constants.PIC[position%4]);
+        RoomHist temp=bookedRoom.get(position);
+        holder.custN.setText("Customer Name: "+temp.getOwedByCustomer()+"");
+        holder.roomP.setText("Total Price: "+temp.getTotalPrice());
+        holder.roomN.setText("Room Number: "+temp.getRoomNumber());
         holder.thisRoom=bookedRoom.get(position);
     }
 
@@ -50,17 +56,24 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
         return bookedRoom.size();
     }
 
+    public void updateList() {
+        bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
+        notifyDataSetChanged();
+    }
+
     public class Holder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView beds;
-        ImageView booking;
+        TextView custN;
+        TextView roomP;
+        TextView roomN;
         RoomHist thisRoom;
         public Holder(View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.roomPic);
-            beds=itemView.findViewById(R.id.beds);
-            booking=itemView.findViewById(R.id.booking);
-            booking.setOnClickListener(new View.OnClickListener() {
+            custN=itemView.findViewById(R.id.custN);
+            roomP=itemView.findViewById(R.id.roomP);
+            roomN=itemView.findViewById(R.id.roomN);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BookedEditDIalog bookedEditDIalog=new BookedEditDIalog();

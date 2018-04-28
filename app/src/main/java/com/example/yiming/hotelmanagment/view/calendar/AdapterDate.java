@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
+import com.example.yiming.hotelmanagment.common.RoomHist;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +34,7 @@ public class AdapterDate extends BaseAdapter {
     int end=-1;
     int year;
     int month;
+    int firstDayOfMonth;
     //签到成功的回调方法，相应的可自行添加签到失败时的回调方法
     private ChangeStatusListener changeStatusListener;
 
@@ -49,7 +51,8 @@ public class AdapterDate extends BaseAdapter {
         viewHolderList=new ArrayList<>();
 
         //DateUtil.getFirstDayOfMonth()获取当月第一天是星期几，星期日是第一天，依次类推
-        for(int i=0;i<getFirstDayOfMonth(year,month);i++){
+        firstDayOfMonth=getFirstDayOfMonth(year,month);
+        for(int i=0;i<firstDayOfMonth;i++){
             //0代表需要隐藏的item
             days.add(0);
             //代表为签到状态
@@ -108,8 +111,13 @@ public class AdapterDate extends BaseAdapter {
                     }
                     if(position==start){
                         // disable start
-                        start=end;
-                        clickDate[0]=null;
+                        if(position==end){
+                            start=end=-1;
+                            clickDate[0]=clickDate[1]=null;
+                        }else{
+                            start=end;
+                            clickDate[0]=null;
+                        }
                     }else{
                         //disable end
                         end=start;
@@ -162,6 +170,32 @@ public class AdapterDate extends BaseAdapter {
 
         return convertView;
     }
+
+    public void updateDateCalendar(List<RoomHist> historyForCalendar) {
+        RoomHist tmp;
+        Date beginHistory;
+        Date endHistory;
+        for(int i=0;i<historyForCalendar.size();i++){
+            tmp=historyForCalendar.get(i);
+            beginHistory=tmp.getExpectCheckInDate();
+            endHistory=tmp.getExpectCheckoOutDate();
+            int beginYear=beginHistory.getYear()+1900;
+            int beginMonth=beginHistory.getMonth()+1;
+            int endYear=endHistory.getYear()+1900;
+            int endMonth=endHistory.getMonth()+1;
+            if(beginYear==year && beginMonth==month && endYear==year && endMonth==month){
+                int l=beginHistory.getDate();
+                int r=endHistory.getDate();
+                for(int j=l;j<=r;j++){
+                    status.set(j+firstDayOfMonth-1,Constants.bookedBefore);
+                    TextView tv2=viewHolderList.get(j+firstDayOfMonth-1).tv;
+                    tv2.setTextColor(Color.parseColor("#633e3d3d"));
+                }
+
+            }
+        }
+    }
+
     class ViewHolder{
         RelativeLayout rlItem;
         TextView tv;
