@@ -30,7 +30,7 @@ public class Constants {
     public static final String BOOKED="BOOKED";
 
     //fake information for room
-    public static final int[]  PRRICE={300,330,540,720};
+    public static final Double[]  PRRICE={300.0,330.0,540.0,720.0};
     public static final int[]  BEDS={1,2,3,5};
     public static final int[]  PIC={R.drawable.r1,R.drawable.r2,R.drawable.r3,R.drawable.r4};
 
@@ -39,4 +39,6 @@ public class Constants {
     public static final int notClick =0;
     public static final int clicked = 1;
     public static final int betweenClick=2;
+    public static final String EMPLOYEE_END_URL ="" ;
+    public static final String EPLOYEE_BASE_URL ="" ;
 }

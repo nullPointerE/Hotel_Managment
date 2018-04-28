@@ -25,6 +25,7 @@ public class Splasher extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(Splasher.this, LoginActivity.class));
+                finish();
             }
         },500);
         video =findViewById(R.id.video);

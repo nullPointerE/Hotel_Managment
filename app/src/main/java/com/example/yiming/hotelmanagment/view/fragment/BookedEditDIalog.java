@@ -15,21 +15,26 @@ import android.widget.TimePicker;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.view.MainActivity;
+import com.example.yiming.hotelmanagment.common.Constants;
+import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
+import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class BookedEditDIalog extends DialogFragment {
     private TextView degreeOfLightsTV, editMealsTV, breakfastTimeTv, lunchTimeTv, dinnerTimeTv;
     private SeekBar seekBar;
-
     private String format="";
     private int hour, minute;
+    int transactionId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.booked_room_edit,container,false);
         seekBar = v.findViewById(R.id.degreeOfLightsSeekBar);
         degreeOfLightsTV = v.findViewById(R.id.degreeOfLightsTV);
+        transactionId =getArguments().getInt(TasksPersistenceContract.RoomTransaction.transactionId);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

@@ -13,6 +13,7 @@ public interface TasksDataSource {
         void onTaskLoaded();
 
         void onDataNotAvailable();
+
     }
 
 

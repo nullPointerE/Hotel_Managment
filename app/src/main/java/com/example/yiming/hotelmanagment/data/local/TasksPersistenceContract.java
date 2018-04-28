@@ -40,17 +40,24 @@ public class TasksPersistenceContract {
     public static abstract class RoomTable implements BaseColumns {
         public static final String TABLE_NAME = "room";
         public static final String roomNumber = "roomNumber";
-        public static final String status = "status";
-        public static final String owedByCustomer = "owedByCustomer";
         public static final String PRICE="price";
         public static final String BEDS="beds";
+
+
+    }
+    public static abstract class RoomTransaction implements BaseColumns{
+        public static final String TABLE_NAME = "roomBook";
+        public static final String transactionId="transactionId";
+        public static final String roomNumber = "roomNumber";
+        public static final String status = "status";
+        public static final String owedByCustomer = "owedByCustomer";
+        public static final String totalPrice="totalPrice";
 
         public static final String autoCancelDate = "autoCancelDate";
         public static final String expectCheckInDate = "expectCheckInDate";
         public static final String actualCheckInDate = "actualCheckInDate";
         public static final String expectCheckoOutDate = "expectCheckoOutDate";
         public static final String actualCheckOutDate = "actualCheckOutDate";
-
     }
 
     public static abstract class FoodTable implements BaseColumns {

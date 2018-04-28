@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.R;
@@ -24,48 +25,42 @@ import java.util.Date;
 import java.util.List;
 
 public class CalendarDialog extends DialogFragment  {
-    private ViewPager viewPager;
     Spinner avaliable_roomNumber;
     Spinner book_customer;
     Button commit_book;
     Date[] clickDateList;
-    boolean room_choosed=false;
-    boolean customer_choosed=false;
     int beds;
-
+    double singlePrice;
+    TextView totalPrice;
     ArrayAdapter<String> roomAdapter;
     ArrayAdapter<String> custAdapter;
+    CalendarPagerAdapter calendarPagerAdapter;
+    ArrayList<Customer> customerList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.calendar_viewpager,container,false);
-        viewPager=v.findViewById(R.id.viewPager);
+        ViewPager viewPager = v.findViewById(R.id.viewPager);
         avaliable_roomNumber=v.findViewById(R.id.avaliable_roomNumber);
         book_customer=v.findViewById(R.id.book_customer);
         commit_book=v.findViewById(R.id.commit_book);
-        commit_book.setEnabled(false);
+        totalPrice=v.findViewById(R.id.totalPrice);
 
         beds=getArguments().getInt(Constants.ROOMS);
-        final CalendarPagerAdapter calendarPagerAdapter=new CalendarPagerAdapter(getActivity());
+        singlePrice=getArguments().getDouble("singlePrice");
+
+        calendarPagerAdapter=new CalendarPagerAdapter(getActivity(),totalPrice,singlePrice);
         viewPager.setAdapter(calendarPagerAdapter);
         ArrayList<String> aval_roomNumber=new ArrayList<>();
         ArrayList<String> boo_customer=new ArrayList<>();
         ArrayList<Room> roomlist= (ArrayList<Room>) TasksLocalDataSource.getInstance(getActivity()).getRoomListByBeds(beds);
         for(int i=0;i<roomlist.size();i++){
             aval_roomNumber.add(roomlist.get(i).getRoomNumber()+"");
-            room_choosed=true;
-            if(customer_choosed){
-                commit_book.setEnabled(true);
-            }
         }
-        ArrayList<Customer> customerList= (ArrayList<Customer>) TasksLocalDataSource.getInstance(getActivity()).getCustomerList();
+        customerList= (ArrayList<Customer>) TasksLocalDataSource.getInstance(getActivity()).getCustomerList();
         for(int i=0;i<customerList.size();i++){
             Customer customer=customerList.get(i);
             boo_customer.add(customer.getFirstName()+" "+customer.getLastName());
-            customer_choosed=true;
-            if(room_choosed){
-                commit_book.setEnabled(true);
-            }
         }
 
         roomAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,aval_roomNumber);
@@ -86,9 +81,9 @@ public class CalendarDialog extends DialogFragment  {
                     Toast.makeText(getActivity(),"not set date",Toast.LENGTH_LONG).show();
                 }else{
                     int roomNumber=Integer.valueOf(avaliable_roomNumber.getSelectedItem().toString());
-                    int custNumber=Integer.valueOf(book_customer.getSelectedItem().toString());
+                    int custNumber=customerList.get(book_customer.getSelectedItemPosition()).getCustomerId();
                     Log.i("commit_book ", roomNumber+" "+custNumber);
-                    TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1]);
+                    TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));
                     dismiss();
                 }
             }

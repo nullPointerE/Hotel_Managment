@@ -135,9 +135,11 @@ public class AdapterDate extends BaseAdapter {
                     }else{
                         //start==end
                         if(start>position){
+                            clickDate[1]=getDateByDay(days.get(start));
                             start=position;
                             clickDate[0]=getDateByDay(days.get(start));
                         }else{
+                            clickDate[0]=getDateByDay(days.get(end));
                             end=position;
                             clickDate[1]=getDateByDay(days.get(end));
                         }
@@ -192,7 +194,7 @@ public class AdapterDate extends BaseAdapter {
             viewHolder.ivStatus.setVisibility(View.GONE);
         }else{
             //grey background
-            viewHolder.tv.setTextColor(Color.parseColor("#633e3d3d"));
+            viewHolder.tv.setTextColor(Color.parseColor("#FF4081"));
             viewHolder.ivStatus.setVisibility(View.GONE);
         }
     }
