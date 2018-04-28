@@ -44,15 +44,10 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         ArrayAdapter<CharSequence> titleAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.title, android.R.layout.simple_spinner_item);
         titleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         title.setAdapter(titleAdapter);
-        title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        title.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                customer.setTitle(parent.getItemAtPosition(position).toString());
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                customer.setTitle(adapterView.getItemAtPosition(pos).toString());
 
             }
         });
@@ -60,11 +55,10 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         ArrayAdapter<CharSequence> genderAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(genderAdapter);
-        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        gender.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                customer.setGender(parent.getItemAtPosition(position).toString());
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                customer.setGender(adapterView.getItemAtPosition(pos).toString());
             }
 
             @Override
