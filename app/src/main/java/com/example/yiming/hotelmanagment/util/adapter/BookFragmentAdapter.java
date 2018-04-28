@@ -12,16 +12,23 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
+import com.example.yiming.hotelmanagment.common.Room;
+import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
+import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 import com.example.yiming.hotelmanagment.view.MainActivity;
-import com.example.yiming.hotelmanagment.view.calendar.CalendarDialog;
 import com.example.yiming.hotelmanagment.view.fragment.BookedEditDIalog;
+
+import java.util.List;
 
 public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapter.Holder> {
     Context context;
     MainActivity mainActivity;
+    List<RoomHist> bookedRoom;
     public BookFragmentAdapter(Context context){
         this.context=context;
         mainActivity= (MainActivity) context;
+        bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
     }
     @NonNull
     @Override
@@ -35,18 +42,19 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.imageView.setImageResource(Constants.PIC[position]);
         holder.beds.setText(Constants.BEDS[position]+"");
+        holder.thisRoom=bookedRoom.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return bookedRoom.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView beds;
         ImageView booking;
-
+        RoomHist thisRoom;
         public Holder(View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.roomPic);
@@ -57,6 +65,7 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
                 public void onClick(View v) {
                     BookedEditDIalog bookedEditDIalog=new BookedEditDIalog();
                     Bundle bundle=new Bundle();
+                    bundle.putInt(TasksPersistenceContract.RoomTransaction.transactionId,thisRoom.getTransactionId());
                     bookedEditDIalog.setArguments(bundle);
                     bookedEditDIalog.show(mainActivity.getFragmentManager(),"book edit");
                 }

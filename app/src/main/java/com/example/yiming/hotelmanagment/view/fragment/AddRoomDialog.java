@@ -67,7 +67,6 @@ public class AddRoomDialog extends DialogFragment {
             public void onClick(View v) {
                 Room room = new Room();
                 room.setBeds(Int_beds);
-                room.setStatus(Constants.isVacant);
                 room.setPrice(Double.valueOf(price.getText().toString()));
                 room.setRoomNumber(Integer.valueOf(roomNumber.getText().toString()));
                 TasksLocalDataSource.getInstance(getActivity()).addRoom(room);

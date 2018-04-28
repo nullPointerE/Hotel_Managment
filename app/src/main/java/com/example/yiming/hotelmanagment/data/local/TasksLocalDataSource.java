@@ -10,6 +10,7 @@ import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 import com.example.yiming.hotelmanagment.common.Food;
 import com.example.yiming.hotelmanagment.common.Room;
+import com.example.yiming.hotelmanagment.common.RoomHist;
 import com.example.yiming.hotelmanagment.data.TasksDataSource;
 import com.example.yiming.hotelmanagment.util.CheckNotNull;
 
@@ -43,153 +44,128 @@ public class TasksLocalDataSource implements TasksDataSource {
     public void addRoom(Room room){
         CheckNotNull.checkNotNull(room);
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        db.execSQL("insert into "+ RoomTable.TABLE_NAME+"("+RoomTable.roomNumber+","+RoomTable.status+","+RoomTable.owedByCustomer+","+RoomTable.PRICE+"," +
-                        RoomTable.BEDS+","+RoomTable.expectCheckInDate+","+RoomTable.expectCheckoOutDate+","+RoomTable.actualCheckInDate+"," +
-                        RoomTable.actualCheckOutDate+","+RoomTable.autoCancelDate+
-                        ") values(?,?,?,?,?,?,?,?,?,?)"
-                ,new Object[]{room.getRoomNumber(),room.getStatus(),room.getOwedByCustomer(),room.getPrice(),room.getBeds(),
-                        0,0,0,0,0});
+        db.execSQL("insert into "+ RoomTable.TABLE_NAME+"("+RoomTable.roomNumber+","+RoomTable.PRICE+"," +
+                        RoomTable.BEDS+ ") values(?,?,?)"
+                ,new Object[]{room.getRoomNumber(),room.getPrice(),room.getBeds()});
         db.close();
     }
     public boolean deleteRoom(int roomNumber){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.status},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
-        cursor.moveToFirst();
-
-        if(cursor.isAfterLast()){
-            Log.e("deleteRoom ","room numbser not exist");
-            return false;  // room numbser not exist
-        }
         db.execSQL("delete from "+ RoomTable.TABLE_NAME+" where "+RoomTable.roomNumber+"="+roomNumber);
         return true;
     }
     public void updateRoomInfo(Room room){
         CheckNotNull.checkNotNull(room);
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+RoomTable.PRICE+"=?," +
-                        RoomTable.BEDS+"=?,"+RoomTable.expectCheckInDate+"=?,"+RoomTable.expectCheckoOutDate+"=?,"+RoomTable.actualCheckInDate+"=?," +
-                        RoomTable.actualCheckOutDate+"=?,"+RoomTable.autoCancelDate+"=?"+
-                        " where "+RoomTable.roomNumber+"=?"
-                ,new Object[]{room.getStatus(),room.getOwedByCustomer(),room.getPrice(),room.getBeds(),
-                        room.getExpectCheckInDate().getTime(),room.getExpectCheckoOutDate().getTime(),
-                        room.getActualCheckInDate().getTime(),room.getActualCheckOutDate().getTime(),
-                        room.getAutoCancelDate().getTime(),room.getRoomNumber()});
+        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.PRICE+"=?," +
+                        RoomTable.BEDS+"=? where "+RoomTable.roomNumber+"=?"
+                ,new Object[]{room.getPrice(),room.getBeds(), room.getRoomNumber()});
         db.close();
     }
 
-    public boolean bookRoom(int roomNumber, int owedByCustomer, Date in, Date out){
+    public boolean bookRoom(int roomNumber, int owedByCustomer, Date in, Date out, double totalPrice){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.status},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.roomNumber},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
         cursor.moveToFirst();
 
         if(cursor.isAfterLast()){
             Log.e("bookRoom ","room numbser not exist");
             return false;  // room numbser not exist
         }
-        int status=cursor.getInt(cursor.getColumnIndex(RoomTable.status));
-        if(status!=Constants.isVacant){
-            Log.e("bookRoom ","room is booked or occupied");
-            return false; // room is booked or occupied
-        }
+
         db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
                         " where "+CustomerTable.customerId+"=?"
                 ,new Object[]{Constants.roomIsGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
 
-        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
-                        RoomTable.expectCheckInDate+"=?,"+RoomTable.expectCheckoOutDate+"=?,"+RoomTable.actualCheckInDate+"=?," +
-                        RoomTable.actualCheckOutDate+"=?,"+RoomTable.autoCancelDate+"=?"+
-                        " where "+RoomTable.roomNumber+"=?"
-                ,new Object[]{Constants.isBooked ,owedByCustomer,in.getTime(),out.getTime(),0,0,in.getTime()+ Constants.autoCancellTime,roomNumber});
+        db.execSQL("insert into "+ RoomTransaction.TABLE_NAME+" ("+RoomTransaction.status+","+RoomTransaction.owedByCustomer+","+RoomTransaction.roomNumber+","+
+                        RoomTransaction.expectCheckInDate+","+RoomTransaction.expectCheckoOutDate+","+RoomTransaction.actualCheckInDate+"," +
+                        RoomTransaction.actualCheckOutDate+","+RoomTransaction.autoCancelDate+","+RoomTransaction.totalPrice+")"+
+                        " values (?,?,?,?,?,?,?,?,?)"
+                ,new Object[]{Constants.isBooked ,owedByCustomer,roomNumber,in.getTime(),out.getTime(),0,0,
+                        in.getTime()+ Constants.autoCancellTime,totalPrice});
 
         db.close();
         return true;
     }
 
-    public boolean roomCheckIn(int roomNumber, int owedByCustomer, Date today){
+    public boolean roomCheckIn(int transactionId , Date today){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.status,RoomTable.expectCheckInDate,RoomTable.expectCheckoOutDate},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,new String[]{RoomTransaction.status,RoomTransaction.owedByCustomer,RoomTransaction.expectCheckInDate,RoomTransaction.expectCheckoOutDate,RoomTransaction.roomNumber},RoomTransaction.transactionId+"=?",new String[]{String.valueOf(transactionId)},null,null,null);
         cursor.moveToFirst();
         if(cursor.isAfterLast()){
-            Log.e("roomCheckIn ","room numbser not exist");
+            Log.e("roomCheckIn ","customer didn't book this room yet");
             return false;  // room numbser not exist
         }
-        int status=cursor.getInt(cursor.getColumnIndex(RoomTable.status));
+        int status=cursor.getInt(cursor.getColumnIndex(RoomTransaction.status));
         if(status!=Constants.isBooked){
-            Log.e("roomCheckIn ","room is not booked");
+            Log.e("roomCheckIn ","customer didn't book this room yet");
             return false; // room is not booked
         }
-        long expectCheckInDate=cursor.getInt(cursor.getColumnIndex(RoomTable.expectCheckInDate));
+        long expectCheckInDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
         if(expectCheckInDate>today.getTime()){
             Log.e("roomCheckIn ","check in earlier than expectCheckInDate");
             return false; // check in earlier than expectCheckInDate
         }
-        long expectCheckoOutDate=cursor.getInt(cursor.getColumnIndex(RoomTable.expectCheckInDate));
+        long expectCheckoOutDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
         if(expectCheckoOutDate<today.getTime()){
             Log.e("roomCheckIn ","check in  later thant expectCheckoOutDate");
-            return false; //check in  later thant expectCheckoOutDate;
+            return false; //check in  later than expectCheckoOutDate;
         }
-
+        String owedByCustomer=cursor.getString(cursor.getColumnIndex(RoomTransaction.owedByCustomer));
+        String roomNumber=cursor.getString(cursor.getColumnIndex(RoomTransaction.roomNumber));
         db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
                         " where "+CustomerTable.customerId+"=?"
-                ,new Object[]{Constants.roomIsGuaranteed ,Constants.roomIsGuaranteed,owedByCustomer});
+                ,new Object[]{roomNumber ,Constants.roomIsGuaranteed,owedByCustomer});
 
-        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
-                        RoomTable.actualCheckInDate+"=?"+
-                        " where "+RoomTable.roomNumber+"=?"
-                ,new Object[]{Constants.isCheckIn ,owedByCustomer,today.getTime()+ Constants.autoCancellTime,roomNumber});
+        db.execSQL("update "+ RoomTransaction.TABLE_NAME+" set "+RoomTransaction.status+"=?,"+ RoomTransaction.actualCheckInDate+"=?"+
+                        " where "+RoomTransaction.transactionId+"=?"
+                ,new Object[]{Constants.isCheckIn ,today.getTime(),transactionId});
 
         db.close();
         return true;
     }
 
-    public boolean roomCheckOut(int roomNumber, int owedByCustomer, Date today){
+    public boolean roomCheckOut(int transactionId, Date today){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.status},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,new String[]{RoomTransaction.owedByCustomer},RoomTransaction.transactionId+"=?",new String[]{String.valueOf(transactionId)},null,null,null);
         cursor.moveToFirst();
         if(cursor.isAfterLast()){
-            Log.e("roomCheckOut ","room numbser not exist");
+            Log.e("roomCheckOut ","customer didn't book this room yet");
             return false;  // room numbser not exist
         }
-        int status=cursor.getInt(cursor.getColumnIndex(RoomTable.status));
+        int status=cursor.getInt(cursor.getColumnIndex(RoomTransaction.status));
         if(status!=Constants.isCheckIn){
             Log.e("roomCheckOut ","not checkIn yet");
             return false; // not checkIn yet
         }
+        String owedByCustomer=cursor.getString(cursor.getColumnIndex(RoomTransaction.owedByCustomer));
         db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
                         " where "+CustomerTable.customerId+"=?"
                 ,new Object[]{Constants.roomNotGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
 
-        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
-                        RoomTable.actualCheckOutDate+"=?"+
-                        " where "+RoomTable.roomNumber+"=?"
-                ,new Object[]{Constants.isVacant ,owedByCustomer,today.getTime()+ Constants.autoCancellTime,roomNumber});
-
+        db.execSQL("delete from "+ RoomTransaction.TABLE_NAME+
+                        " where "+RoomTransaction.transactionId+"=?"
+                ,new Object[]{transactionId});
         db.close();
         return true;
     }
 
-    public boolean cancelRoom(int roomNumber, int owedByCustomer, Date today){
+    public boolean cancelRoom(int transactionId){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTable.TABLE_NAME,new String[]{RoomTable.status},RoomTable.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,new String[]{RoomTransaction.owedByCustomer},RoomTransaction.transactionId+"=?",new String[]{String.valueOf(transactionId)},null,null,null);
         cursor.moveToFirst();
         if(cursor.isAfterLast()){
-            Log.e("cancelRoom ","room numbser not exist");
+            Log.e("cancelRoom ","customer didn't book this room yet");
             return false;  // room numbser not exist
         }
-        int status=cursor.getInt(cursor.getColumnIndex(RoomTable.status));
-        if(status!=Constants.isCheckIn){
-            Log.e("cancelRoom ","not checkIn yet");
-            return false; // not checkIn yet
-        }
+        String owedByCustomer=cursor.getString(cursor.getColumnIndex(RoomTransaction.owedByCustomer));
         db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+
                         " where "+CustomerTable.customerId+"=?"
                 ,new Object[]{Constants.roomNotGuaranteed ,Constants.roomNotGuaranteed,owedByCustomer});
 
-        db.execSQL("update "+ RoomTable.TABLE_NAME+" set "+RoomTable.status+"=?,"+RoomTable.owedByCustomer+"=?,"+
-                        RoomTable.actualCheckOutDate+"=?"+
-                        " where "+RoomTable.roomNumber+"=?"
-                ,new Object[]{Constants.isVacant ,owedByCustomer,today.getTime()+ Constants.autoCancellTime,roomNumber});
-
+        db.execSQL("delete from "+ RoomTransaction.TABLE_NAME+
+                        " where "+RoomTransaction.transactionId+"=?"
+                ,new Object[]{transactionId});
         db.close();
         return true;
     }
@@ -296,17 +272,9 @@ public class TasksLocalDataSource implements TasksDataSource {
         Cursor cursor=db.query(RoomTable.TABLE_NAME,null,RoomTable.roomNumber+"= ? ",new String[]{String.valueOf(roomNumber)},null,null,null);
         if(cursor.moveToFirst() && !cursor.isAfterLast()){
             room.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTable.roomNumber)));
-            room.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTable.status)));
-            room.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTable.owedByCustomer)));
             room.setPrice(cursor.getDouble(cursor.getColumnIndex(RoomTable.PRICE)));
             room.setBeds(cursor.getInt(cursor.getColumnIndex(RoomTable.BEDS)));
-
-            room.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.autoCancelDate))));
-            room.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckInDate))));
-            room.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckoOutDate))));
-            room.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckInDate))));
-            room.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckOutDate))));
-        }
+            }
         db.close();
         return room;
     }
@@ -318,22 +286,40 @@ public class TasksLocalDataSource implements TasksDataSource {
         for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
             Room room=new Room();
             room.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTable.roomNumber)));
-            room.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTable.status)));
-            room.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTable.owedByCustomer)));
             room.setPrice(cursor.getDouble(cursor.getColumnIndex(RoomTable.PRICE)));
             room.setBeds(cursor.getInt(cursor.getColumnIndex(RoomTable.BEDS)));
-
-            room.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.autoCancelDate))));
-            room.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckInDate))));
-            room.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.expectCheckoOutDate))));
-            room.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckInDate))));
-            room.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTable.actualCheckOutDate))));
             roomList.add(room);
         }
         db.close();
 
         return roomList;
     }
+
+    public List<RoomHist> getRoomTrasactionsList(){
+        List<RoomHist> roomList=new ArrayList<>();
+        SQLiteDatabase db=mDbHelper.getReadableDatabase();
+        Cursor cursor=db.query(RoomTransaction.TABLE_NAME,null,null,null,null,null,null);
+        for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
+            RoomHist roomHist=new RoomHist();
+            roomHist.setTransactionId(cursor.getInt(cursor.getColumnIndex(RoomTransaction.transactionId)));
+            roomHist.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTransaction.roomNumber)));
+            roomHist.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTransaction.status)));
+            roomHist.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTransaction.owedByCustomer)));
+            roomHist.setTotalPrice(cursor.getDouble(cursor.getColumnIndex(RoomTransaction.totalPrice)));
+
+            roomHist.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.autoCancelDate))));
+            roomHist.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.expectCheckInDate))));
+            roomHist.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.expectCheckoOutDate))));
+            roomHist.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.actualCheckInDate))));
+            roomHist.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.actualCheckOutDate))));
+            roomList.add(roomHist);
+        }
+        db.close();
+
+        return roomList;
+    }
+
+
     public Food getFoodById(int foodId){
         Food food=new Food();
         SQLiteDatabase db=mDbHelper.getReadableDatabase();

@@ -7,8 +7,11 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
+
+import junit.framework.TestCase;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,11 +22,15 @@ public class CalendarPagerAdapter extends PagerAdapter {
     private LinkedList<SignDate> cache = new LinkedList<>();
     private int[] currentYearAndMonth;
     private SparseArray<SignDate> mViews = new SparseArray<>();
-
+    private TextView totalPrice;
+    double singlePrice;
     private Date[] clickDate;
-    CalendarPagerAdapter(Context context){
-        this.context=context;
-        currentYearAndMonth=DateUtil.getCurrentYearAndMonth();
+
+    CalendarPagerAdapter(Context context, TextView totalprice, double singlPrice) {
+        this.context = context;
+        currentYearAndMonth = DateUtil.getCurrentYearAndMonth();
+        totalPrice = totalprice;
+        singlePrice = singlPrice;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view==object;
+        return view == object;
     }
 
     @NonNull
@@ -42,16 +49,23 @@ public class CalendarPagerAdapter extends PagerAdapter {
         SignDate signDate;
         if (!cache.isEmpty()) {
             signDate = cache.removeFirst();
-        }else {
+        } else {
             signDate = new SignDate(container.getContext());
         }
-        int[] yearAndMonth=DateUtil.positionToDate(position,currentYearAndMonth[0],currentYearAndMonth[1]);
-        signDate.init(yearAndMonth[0],yearAndMonth[1]);
+        int[] yearAndMonth = DateUtil.positionToDate(position, currentYearAndMonth[0], currentYearAndMonth[1]);
+        signDate.init(yearAndMonth[0], yearAndMonth[1]);
 
         signDate.setOnSignedSuccess(new ChangeStatusListener() {
             @Override
             public void onOrderSuccess(Date[] dateList) {
-                clickDate=dateList;
+                clickDate = dateList;
+                Double total;
+                if (clickDate[0] != null && clickDate[1] != null) {
+                    total = singlePrice * (Math.ceil((clickDate[1].getTime() - clickDate[0].getTime()) / (1000 * 3600 * 24)) + 1);
+                } else {
+                    total = singlePrice;
+                }
+                totalPrice.setText(String.valueOf(total));
             }
         });
         container.addView(signDate);
@@ -69,7 +83,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
         return mViews;
     }
 
-    public Date[] getClickDateList(){
+    public Date[] getClickDateList() {
         return clickDate;
     }
 }

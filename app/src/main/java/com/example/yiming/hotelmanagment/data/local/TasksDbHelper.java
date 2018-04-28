@@ -44,15 +44,20 @@ public class TasksDbHelper extends SQLiteOpenHelper {
 
         db.execSQL("create table "+RoomTable.TABLE_NAME+"(" +
                 RoomTable.roomNumber+" Integer primary key not null," +
-                RoomTable.status +" Integer," +
-                RoomTable.owedByCustomer+" Integer," +
                 RoomTable.PRICE+" Double not null," +
-                RoomTable.BEDS+" Integer not null," +
-                RoomTable.expectCheckInDate+" INTEGER," +
-                RoomTable.expectCheckoOutDate+" INTEGER," +
-                RoomTable.actualCheckInDate+" INTEGER," +
-                RoomTable.actualCheckOutDate+" INTEGER," +
-                RoomTable.autoCancelDate+" INTEGER)");
+                RoomTable.BEDS+" Integer not null)");
+
+        db.execSQL("create table "+RoomTransaction.TABLE_NAME+"("+
+                RoomTransaction.transactionId+" Integer primary key autoincrement," +
+                RoomTransaction.roomNumber +" Integer not null," +
+                RoomTransaction.status +" Integer not null," +
+                RoomTransaction.owedByCustomer+" Integer not null," +
+                RoomTransaction.totalPrice+" Double not null,"+
+                RoomTransaction.expectCheckInDate+" INTEGER,"+
+                RoomTransaction.expectCheckoOutDate+" INTEGER," +
+                RoomTransaction.actualCheckInDate+" INTEGER," +
+                RoomTransaction.actualCheckOutDate+" INTEGER," +
+                RoomTransaction.autoCancelDate+" INTEGER)");
 
         db.execSQL("create table "+ FoodTable.TABLE_NAME+"(" +
                 FoodTable.foodId+" Integer primary key autoincrement," +
