@@ -39,6 +39,5 @@ public class Constants {
     public static final int notClick =0;
     public static final int clicked = 1;
     public static final int betweenClick=2;
-    public static final String EMPLOYEE_END_URL ="" ;
-    public static final String EPLOYEE_BASE_URL ="" ;
+
 }

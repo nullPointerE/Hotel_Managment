@@ -62,6 +62,8 @@
     <string name="breakfast_tv_text">Break Fast</string>
     <string name="lunchTv_text">Lunch</string>
     <string name="dinnerTv_text">Dinner</string>
+    <string name="checkinButton_text">Check In</string>
+    <string name="checkoutButton_text">Check Out</string>
 
 
 </resources>

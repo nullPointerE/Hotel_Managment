@@ -16,5 +16,6 @@
     <color name="red">#f24747</color>
 
     <color name="accent_material_light">#ff40cf</color>
+    <color name="colorTransparent">#00ffffff</color>
 
 </resources>

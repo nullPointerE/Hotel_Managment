@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -21,12 +22,14 @@ import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
-public class BookedEditDIalog extends DialogFragment {
+public class BookedEditDIalog extends DialogFragment implements View.OnClickListener {
     private TextView degreeOfLightsTV, editMealsTV, breakfastTimeTv, lunchTimeTv, dinnerTimeTv;
     private SeekBar seekBar;
     private String format="";
     private int hour, minute;
+    private Button checkIn, checkOut;
     int transactionId;
     @Nullable
     @Override
@@ -55,7 +58,10 @@ public class BookedEditDIalog extends DialogFragment {
         breakfastTimeTv = v.findViewById(R.id.breakfastTimeTv);
         lunchTimeTv = v.findViewById(R.id.lunchTimeTv);
         dinnerTimeTv = v.findViewById(R.id.dinnerTimeTv);
-
+        checkIn = v.findViewById(R.id.checkinButton);
+        checkOut = v.findViewById(R.id.checkOutButton);
+        checkIn.setOnClickListener(this);
+        checkOut.setOnClickListener(this::onClick);
         breakfastTimeTv.setText("6:30");
         lunchTimeTv.setText("1:30");
         dinnerTimeTv.setText("7:30");
@@ -124,5 +130,18 @@ public class BookedEditDIalog extends DialogFragment {
         return v;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.checkinButton:
+                TasksLocalDataSource.getInstance(getActivity()).roomCheckIn(transactionId, Calendar.getInstance().getTime() );
+                dismiss();
+                break;
+            case R.id.checkOutButton:
+                TasksLocalDataSource.getInstance(getActivity()).roomCheckOut(transactionId, Calendar.getInstance().getTime());
+                dismiss();
+                break;
+        }
+    }
 }
 
