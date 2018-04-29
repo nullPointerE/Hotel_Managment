@@ -399,6 +399,29 @@ public class TasksLocalDataSource implements TasksDataSource {
         db.close();
         return customerList;
     }
+    public List<RoomHist> getTransactionByRoomNumber(int roomNumber){
+        SQLiteDatabase db=mDbHelper.getWritableDatabase();
+        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,null,RoomTransaction.roomNumber+"=?",new String[]{String.valueOf(roomNumber)},null,null,null);
+        List<RoomHist> roomList=new ArrayList<>();
+
+        for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
+            RoomHist roomHist=new RoomHist();
+            roomHist.setTransactionId(cursor.getInt(cursor.getColumnIndex(RoomTransaction.transactionId)));
+            roomHist.setRoomNumber(cursor.getInt(cursor.getColumnIndex(RoomTransaction.roomNumber)));
+            roomHist.setStatus(cursor.getInt(cursor.getColumnIndex(RoomTransaction.status)));
+            roomHist.setOwedByCustomer(cursor.getInt(cursor.getColumnIndex(RoomTransaction.owedByCustomer)));
+            roomHist.setTotalPrice(cursor.getDouble(cursor.getColumnIndex(RoomTransaction.totalPrice)));
+
+            roomHist.setAutoCancelDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.autoCancelDate))));
+            roomHist.setExpectCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.expectCheckInDate))));
+            roomHist.setExpectCheckoOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.expectCheckoOutDate))));
+            roomHist.setActualCheckInDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.actualCheckInDate))));
+            roomHist.setActualCheckOutDate(new Date(cursor.getLong(cursor.getColumnIndex(RoomTransaction.actualCheckOutDate))));
+            roomList.add(roomHist);
+        }
+        db.close();
+        return roomList;
+    }
 
 }
 

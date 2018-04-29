@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.common.RoomHist;
 
 import junit.framework.TestCase;
 
@@ -19,12 +20,14 @@ import java.util.List;
 
 public class CalendarPagerAdapter extends PagerAdapter {
     private Context context;
-    private LinkedList<SignDate> cache = new LinkedList<>();
     private int[] currentYearAndMonth;
-    private SparseArray<SignDate> mViews = new SparseArray<>();
+    private LinkedList<SignDate> mViews = new LinkedList<>();
     private TextView totalPrice;
     double singlePrice;
     private Date[] clickDate;
+
+
+    SignDate signDate;
 
     CalendarPagerAdapter(Context context, TextView totalprice, double singlPrice) {
         this.context = context;
@@ -46,12 +49,8 @@ public class CalendarPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        SignDate signDate;
-        if (!cache.isEmpty()) {
-            signDate = cache.removeFirst();
-        } else {
-            signDate = new SignDate(container.getContext());
-        }
+        signDate = new SignDate(container.getContext());
+        mViews.add(signDate);
         int[] yearAndMonth = DateUtil.positionToDate(position, currentYearAndMonth[0], currentYearAndMonth[1]);
         signDate.init(yearAndMonth[0], yearAndMonth[1]);
 
@@ -75,15 +74,18 @@ public class CalendarPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup view, int position, Object object) {
         view.removeView((SignDate) object);
-        cache.addLast((SignDate) object);
         mViews.remove(position);
-    }
-
-    public SparseArray<SignDate> getViews() {
-        return mViews;
     }
 
     public Date[] getClickDateList() {
         return clickDate;
+    }
+
+
+    public void updateCalendar(List<RoomHist> historyForCalendar) {
+        Log.i("mViews ", mViews.size() + "");
+        for (int i = 0; i < mViews.size(); i++) {
+            mViews.get(i).updateCalendar(historyForCalendar);
+        }
     }
 }
