@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, GuestInformationActivity.class));
                 break;
             case R.id.manager:
-                startActivity(new Intent(this, null));
+                startActivity(new Intent(this, ManagerScreenActivity.class));
                 break;
             case R.id.addRoom:
                 AddRoomDialog addRoomDialog=new AddRoomDialog();

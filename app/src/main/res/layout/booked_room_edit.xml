@@ -1,32 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:padding="30dp"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/checkIn"
-        android:layout_marginTop="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/check_in"
-        android:drawableLeft="@drawable/checkin"/>
+        android:layout_height="wrap_content">
+   <TextView
+       android:id="@+id/degreeOfLightsTVtitle"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_weight="1"
+       android:textColor="@color/white"
+       android:textSize="25dp"
+       android:textStyle="bold"
+       android:text="@string/booked_room_edit_degreeOfLightsTVTitle" />
 
-    <Button
-        android:id="@+id/checkOut"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/check_out"
-        android:drawableLeft="@drawable/checkout"/>
+        <TextView
+            android:id="@+id/degreeOfLightsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/cancel"
-        android:layout_marginTop="10dp"
+    <SeekBar
+        android:id="@+id/degreeOfLightsSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:drawableLeft="@drawable/cancel"/>
+        android:max="100"
+        style="@style/MySeekBar"
+        android:layout_marginBottom="20dp"
+        android:progress="0"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_marginBottom="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/turnTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="@string/turnTvTitle_text" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_marginBottom="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/mealsTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="@string/meals_title_text" />
+        <TextView
+            android:id="@+id/editMealsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="@string/editMealsText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/breakfastTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="@string/breakfast_tv_text" />
+        <TextView
+            android:id="@+id/breakfastTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/lunchTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="@string/lunchTv_text" />
+        <TextView
+            android:id="@+id/lunchTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/dinnerTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="@string/dinnerTv_text" />
+        <TextView
+            android:id="@+id/dinnerTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/checkinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:text="@string/checkinButton_text" />
+
+        <Button
+            android:id="@+id/checkOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:text="@string/checkoutButton_text" />
+    </LinearLayout>
 
 </LinearLayout>
