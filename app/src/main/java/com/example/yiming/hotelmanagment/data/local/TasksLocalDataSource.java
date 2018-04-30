@@ -101,16 +101,16 @@ public class TasksLocalDataSource implements TasksDataSource {
             Log.e("roomCheckIn ","customer didn't book this room yet");
             return false; // room is not booked
         }
-        long expectCheckInDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
-        if(expectCheckInDate>today.getTime()){
-            Log.e("roomCheckIn ","check in earlier than expectCheckInDate");
-            return false; // check in earlier than expectCheckInDate
-        }
-        long expectCheckoOutDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
-        if(expectCheckoOutDate<today.getTime()){
-            Log.e("roomCheckIn ","check in  later thant expectCheckoOutDate");
-            return false; //check in  later than expectCheckoOutDate;
-        }
+//        long expectCheckInDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
+//        if(expectCheckInDate>today.getTime()){
+//            Log.e("roomCheckIn ","check in earlier than expectCheckInDate");
+//            return false; // check in earlier than expectCheckInDate
+//        }
+//        long expectCheckoOutDate=cursor.getInt(cursor.getColumnIndex(RoomTransaction.expectCheckInDate));
+//        if(expectCheckoOutDate<today.getTime()){
+//            Log.e("roomCheckIn ","check in  later thant expectCheckoOutDate");
+//            return false; //check in  later than expectCheckoOutDate;
+//        }
         String owedByCustomer=cursor.getString(cursor.getColumnIndex(RoomTransaction.owedByCustomer));
         String roomNumber=cursor.getString(cursor.getColumnIndex(RoomTransaction.roomNumber));
         db.execSQL("update "+ CustomerTable.TABLE_NAME+" set "+CustomerTable.assignedRoom+"=?,"+CustomerTable.roomIsGuaranteed+"=?"+

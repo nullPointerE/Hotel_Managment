@@ -1,32 +1,21 @@
 package com.example.yiming.hotelmanagment.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.yiming.hotelmanagment.R;
-import com.example.yiming.hotelmanagment.common.Employee;
-import com.example.yiming.hotelmanagment.data.remote.EmployeeAPIService;
-import com.example.yiming.hotelmanagment.data.remote.EmployeeRetrofitInstance;
 import com.example.yiming.hotelmanagment.util.adapter.ManagerScreenAdapter;
 
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
-public class ManagerScreenActivity extends AppCompatActivity {
+public class ManagerScreenActivity extends AppCompatActivity implements IViewManagerScreenActivity{
 private android.support.v7.widget.Toolbar toolbar;
 private RecyclerView employeeRecyclerView;
-private Retrofit retrofit;
-private ManagerScreenAdapter managerScreenAdapter;
+
+private IPresenterManagerScreen iPresenterManagerScreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,23 +27,39 @@ private ManagerScreenAdapter managerScreenAdapter;
         employeeRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         employeeRecyclerView.setLayoutManager(linearLayoutManager);
-
-        EmployeeAPIService apiService = EmployeeRetrofitInstance.getEmployeeRetrofitInstance().create(EmployeeAPIService.class);
-
-        Call<Employee> employeeCall = apiService.getEmployees();
-        employeeCall.enqueue(new Callback<Employee>() {
-            @Override
-            public void onResponse(Call<Employee> call, Response<Employee> response) {
-                Log.i("Response", "Size"+ response.body().getRoomDetailsBeans().size());
-                Log.i("URL", ""+response.raw().request().url());
-            }
-
-            @Override
-            public void onFailure(Call<Employee> call, Throwable t) {
-                Log.i("Response", t.getMessage());
-            }
-        });
-
+        iPresenterManagerScreen = new PresenterManagerScreen(this, ManagerScreenActivity.this);
+        populateEmployees();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.managerscreen_options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.homeOption:
+                finish();
+            return true;
+            case R.id.addEmployeeOption:
+                startActivity(new Intent(this, AddEmployeeActivity.class));
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void populateEmployees() {
+        iPresenterManagerScreen.jasonCall();
+    }
+
+    @Override
+    public void setRecyclerViewAdapter(ManagerScreenAdapter managerScreenAdapter) {
+        employeeRecyclerView.setAdapter(managerScreenAdapter);
+    }
+
 
 }

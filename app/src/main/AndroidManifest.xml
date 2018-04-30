@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.GuestInformationActivity"></activity>
+        <activity android:name=".view.GuestInformationActivity" />
+        <activity android:name=".view.ManagerScreenActivity" />
+        <activity android:name=".view.AddEmployeeActivity"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,10 @@ public class RoomHist {
         return transactionId;
     }
 
+    public int isCheckedIn(){
+        return status;
+    }
+
     public void setTransactionId(int transactionId) {
         this.transactionId = transactionId;
     }

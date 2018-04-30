@@ -27,20 +27,20 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.employee_recycler_item, null  );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.employee_recycler_item, parent, false  );
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.employeeName.setText(employees.getRoomDetailsBeans().get(position).get_$EmployeeName224());
-        holder.employeePay.setText(employees.getRoomDetailsBeans().get(position).get_$EmployeeSalary273());
+        holder.employeeName.setText(employees.getRoomdetails().get(position).getEmpname());
+        holder.employeePay.setText(employees.getRoomdetails().get(position).getEmpsalary());
     }
 
     @Override
     public int getItemCount() {
-        return employees.getRoomDetailsBeans().size();
+        return employees.getRoomdetails().size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

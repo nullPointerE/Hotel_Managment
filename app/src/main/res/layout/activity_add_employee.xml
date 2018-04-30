@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.AddEmployeeActivity">
+
+    <EditText
+        android:id="@+id/empFname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:padding="10dp"
+        android:hint="@string/addEmployee_Name_text" />
+
+    <EditText
+        android:id="@+id/empAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:hint="@string/addEmployee_address_text" />
+
+    <EditText
+        android:id="@+id/empPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:padding="10dp"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:hint="@string/addEmployee_phone_text"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/empSalary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:ems="10"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:hint="@string/addEmployee_salary_text"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/empDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:hint="@string/addEmployee_design_text" />
+
+    <Button
+        android:id="@+id/empSubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:background="@drawable/button_bg_gradient"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:text="@string/addEmployee_submit_text" />
+
+    <Button
+        android:id="@+id/empCancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/personal_information_view_marginLeftRight"
+        android:layout_marginRight="@dimen/personal_information_view_marginLeftRight"
+        android:background="@drawable/button_bg_gradient"
+        android:text="@string/addEmployee_cancel_text" />
+</LinearLayout>

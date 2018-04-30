@@ -79,6 +79,7 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
                     BookedEditDIalog bookedEditDIalog=new BookedEditDIalog();
                     Bundle bundle=new Bundle();
                     bundle.putInt(TasksPersistenceContract.RoomTransaction.transactionId,thisRoom.getTransactionId());
+                    bundle.putInt(TasksPersistenceContract.RoomTransaction.status, thisRoom.isCheckedIn());
                     bookedEditDIalog.setArguments(bundle);
                     bookedEditDIalog.show(mainActivity.getFragmentManager(),"book edit");
                 }

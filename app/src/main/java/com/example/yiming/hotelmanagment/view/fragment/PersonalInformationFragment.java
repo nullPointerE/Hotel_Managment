@@ -59,11 +59,19 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         ArrayAdapter<CharSequence> genderAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(genderAdapter);
-        gender.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                customer.setGender(adapterView.getItemAtPosition(pos).toString());
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                customer.setGender(adapterView.getItemAtPosition(i).toString());
+
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
 
         });
         createNewAccount = view.findViewById(R.id.personal_info_createNewAccoutCB);

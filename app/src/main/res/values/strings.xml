@@ -64,6 +64,13 @@
     <string name="dinnerTv_text">Dinner</string>
     <string name="checkinButton_text">Check In</string>
     <string name="checkoutButton_text">Check Out</string>
+    <string name="addEmployee_Name_text">First Name</string>
+    <string name="addEmployee_address_text">Address</string>
+    <string name="addEmployee_phone_text">Enter Mobile Number</string>
+    <string name="addEmployee_salary_text">Salary</string>
+    <string name="addEmployee_design_text">Designation</string>
+    <string name="addEmployee_submit_text">Submit</string>
+    <string name="addEmployee_cancel_text">Cancel</string>
 
 
 </resources>

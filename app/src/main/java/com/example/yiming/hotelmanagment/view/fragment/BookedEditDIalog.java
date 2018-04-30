@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.view.MainActivity;
@@ -28,7 +29,7 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
     private TextView degreeOfLightsTV, editMealsTV, breakfastTimeTv, lunchTimeTv, dinnerTimeTv;
     private SeekBar seekBar;
     private String format="";
-    private int hour, minute;
+    private int hour, minute, status;
     private Button checkIn, checkOut;
     int transactionId;
     @Nullable
@@ -37,6 +38,7 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         View v=inflater.inflate(R.layout.booked_room_edit,container,false);
         seekBar = v.findViewById(R.id.degreeOfLightsSeekBar);
         degreeOfLightsTV = v.findViewById(R.id.degreeOfLightsTV);
+        status = getArguments().getInt(TasksPersistenceContract.RoomTransaction.status);
         transactionId =getArguments().getInt(TasksPersistenceContract.RoomTransaction.transactionId);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -59,6 +61,14 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         lunchTimeTv = v.findViewById(R.id.lunchTimeTv);
         dinnerTimeTv = v.findViewById(R.id.dinnerTimeTv);
         checkIn = v.findViewById(R.id.checkinButton);
+        if(status==Constants.isCheckIn) {
+            checkIn.setEnabled(false);
+            checkIn.setTextColor(getResources().getColor(R.color.white_transparent));
+        }
+        if(status!=Constants.isCheckIn){
+            checkOut.setEnabled(false);
+            checkOut.setTextColor(getResources().getColor(R.color.white_transparent));
+        }
         checkOut = v.findViewById(R.id.checkOutButton);
         checkIn.setOnClickListener(this);
         checkOut.setOnClickListener(this::onClick);
@@ -135,6 +145,7 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         switch (view.getId()){
             case R.id.checkinButton:
                 TasksLocalDataSource.getInstance(getActivity()).roomCheckIn(transactionId, Calendar.getInstance().getTime() );
+                Toast.makeText(getActivity(), "Status"+status, Toast.LENGTH_SHORT).show();
                 dismiss();
                 break;
             case R.id.checkOutButton:

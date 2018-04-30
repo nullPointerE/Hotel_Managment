@@ -17,6 +17,8 @@ public class Constants {
     //http://rjtmobile.com/ansari/hms/hmsapp/hms_emp_info.php
     public static final String  EPLOYEE_BASE_URL="http://rjtmobile.com/ansari/hms/hmsapp/";
     public static final String EMPLOYEE_END_URL="hms_emp_info.php";
+    public static final String ADD_EMPLOYEE_BASE_URL="http://rjtmobile.com/ansari/hms/hmsapp/";
+    public static final String ADD_EMPLOYEE_END_URL="hms_emp_manag.php";
     //  customer status
     public static final int roomIsGuaranteed =1;
     public static final int roomNotGuaranteed =0;
