@@ -27,7 +27,7 @@ private IPresenterAddEmployee iPresenterAddEmployee;
         submit = findViewById(R.id.empSubmitButton);
         submit.setOnClickListener(this);
         cancel = findViewById(R.id.empCancelButton);
-
+        cancel.setOnClickListener(this::onClick);
 
     }
 
@@ -43,6 +43,7 @@ private IPresenterAddEmployee iPresenterAddEmployee;
                 addEmployee = new AddEmployee(name.getText().toString(), address.getText().toString(), salary.getText().toString(), designation.getText().toString(), mobileNumber.getText().toString());
                 iPresenterAddEmployee = new PresenterAddEmployee(this, this,addEmployee);
                 iPresenterAddEmployee.jasonCall();
+                finish();
                 break;
             case R.id.empCancelButton:
                 finish();
