@@ -127,7 +127,7 @@ public class TasksLocalDataSource implements TasksDataSource {
 
     public boolean roomCheckOut(int transactionId, Date today){
         SQLiteDatabase db=mDbHelper.getWritableDatabase();
-        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,new String[]{RoomTransaction.owedByCustomer},RoomTransaction.transactionId+"=?",new String[]{String.valueOf(transactionId)},null,null,null);
+        Cursor cursor = db.query (RoomTransaction.TABLE_NAME,new String[]{RoomTransaction.owedByCustomer,RoomTransaction.status},RoomTransaction.transactionId+"=?",new String[]{String.valueOf(transactionId)},null,null,null);
         cursor.moveToFirst();
         if(cursor.isAfterLast()){
             Log.e("roomCheckOut ","customer didn't book this room yet");

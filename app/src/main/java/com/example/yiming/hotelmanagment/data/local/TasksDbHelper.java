@@ -65,7 +65,14 @@ public class TasksDbHelper extends SQLiteOpenHelper {
                 FoodTable.foodName+" varchar(20)," +
                 FoodTable.PRICE+" Double," +
                 FoodTable.status+" Integer)");
-    }
+
+//        db.execSQL("create table "+ FoodOrder.TABLE_NAME+"(" +
+//                FoodOrder.orderId+" Integer primary key autoincrement," +
+//                FoodOrder.roomNumber+" Integer," +
+//                FoodOrder.customerId+" Integer," +
+//                FoodOrder.totalPrice+" Double," +
+//                FoodOrder.status+" Integer)");
+        }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

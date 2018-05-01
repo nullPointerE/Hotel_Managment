@@ -68,4 +68,13 @@ public class TasksPersistenceContract {
         public static final String PRICE="price";
         public static final String status="status";
     }
+
+//    public static abstract class FoodOrder implements BaseColumns {
+//        public static final String TABLE_NAME = "foodOrder";
+//        public static final String orderId = "orderId";
+//        public static final String roomNumber = "roomNumber";
+//        public static final String customerId = "customerId";
+//        public static final String totalPrice="totalPrice";
+//        public static final String status="status";
+//    }
 }

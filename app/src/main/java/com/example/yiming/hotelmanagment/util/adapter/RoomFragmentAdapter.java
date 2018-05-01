@@ -48,7 +48,6 @@ public class RoomFragmentAdapter extends RecyclerView.Adapter<RoomFragmentAdapte
         ImageView imageView;
         TextView price;
         TextView beds;
-        TextView book;
         int bed;
         double singlePrice;
         public Holder(View itemView) {
@@ -56,8 +55,7 @@ public class RoomFragmentAdapter extends RecyclerView.Adapter<RoomFragmentAdapte
             imageView=itemView.findViewById(R.id.roomPic);
             beds=itemView.findViewById(R.id.beds);
             price=itemView.findViewById(R.id.price);
-            book=itemView.findViewById(R.id.book);
-            book.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CalendarDialog calendarDialog=new CalendarDialog();
@@ -65,7 +63,7 @@ public class RoomFragmentAdapter extends RecyclerView.Adapter<RoomFragmentAdapte
                     bundle.putInt(Constants.ROOMS,bed);
                     bundle.putDouble("singlePrice",singlePrice);
                     calendarDialog.setArguments(bundle);
-                    calendarDialog.show(mainActivity.getFragmentManager(),"calendar");
+                    calendarDialog.show(mainActivity.getSupportFragmentManager(),"calendarDialog");
                 }
             });
         }

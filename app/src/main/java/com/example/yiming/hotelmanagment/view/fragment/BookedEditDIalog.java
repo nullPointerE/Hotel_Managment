@@ -1,11 +1,13 @@
 package com.example.yiming.hotelmanagment.view.fragment;
 
 
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.data.livedata.RoomDatabase.RoomViewModel;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
+import com.example.yiming.hotelmanagment.util.adapter.BookFragmentAdapter;
+import com.example.yiming.hotelmanagment.util.firebase.FireBaseMessage;
 import com.example.yiming.hotelmanagment.view.MainActivity;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
@@ -29,17 +35,25 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
     private TextView degreeOfLightsTV, editMealsTV, breakfastTimeTv, lunchTimeTv, dinnerTimeTv;
     private SeekBar seekBar;
     private String format="";
-    private int hour, minute, status;
+    private int hour, minute;
     private Button checkIn, checkOut;
-    int transactionId;
+    //int transactionId;
+    BookFragmentAdapter bookFragmentAdapter;
+    RoomViewModel roomViewModel;
+    RoomTrans roomTrans;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.booked_room_edit,container,false);
         seekBar = v.findViewById(R.id.degreeOfLightsSeekBar);
         degreeOfLightsTV = v.findViewById(R.id.degreeOfLightsTV);
-        status = getArguments().getInt(TasksPersistenceContract.RoomTransaction.status);
-        transactionId =getArguments().getInt(TasksPersistenceContract.RoomTransaction.transactionId);
+        checkIn= v.findViewById(R.id.checkinButton);
+        checkOut= v.findViewById(R.id.checkOutButton);
+
+        roomViewModel= ViewModelProviders.of(this).get(RoomViewModel.class);
+        //status = getArguments().getInt(TasksPersistenceContract.RoomTransaction.status);
+        //transactionId =getArguments().getInt(TasksPersistenceContract.RoomTransaction.transactionId);
+        roomTrans=getArguments().getParcelable(Constants.RoomTrans);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -61,11 +75,11 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         lunchTimeTv = v.findViewById(R.id.lunchTimeTv);
         dinnerTimeTv = v.findViewById(R.id.dinnerTimeTv);
         checkIn = v.findViewById(R.id.checkinButton);
-        if(status==Constants.isCheckIn) {
+        if(roomTrans.getStatus()==Constants.isCheckIn) {
             checkIn.setEnabled(false);
             checkIn.setTextColor(getResources().getColor(R.color.white_transparent));
         }
-        if(status!=Constants.isCheckIn){
+        if(roomTrans.getStatus()!=Constants.isCheckIn){
             checkOut.setEnabled(false);
             checkOut.setTextColor(getResources().getColor(R.color.white_transparent));
         }
@@ -137,6 +151,8 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
                 timePickerDialogDinner.show();
             }
         });
+        FireBaseMessage message=new FireBaseMessage();
+        message.sentMessage(getActivity());
         return v;
     }
 
@@ -144,15 +160,25 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.checkinButton:
-                TasksLocalDataSource.getInstance(getActivity()).roomCheckIn(transactionId, Calendar.getInstance().getTime() );
-                Toast.makeText(getActivity(), "Status"+status, Toast.LENGTH_SHORT).show();
+                //TasksLocalDataSource.getInstance(getActivity()).roomCheckIn(transactionId, Calendar.getInstance().getTime() );
+                roomTrans.setStatus(Constants.isCheckIn);
+                roomTrans.setActualCheckInDate(Calendar.getInstance().getTime().getTime());
+                roomViewModel.update(roomTrans);
+                Toast.makeText(getActivity(), "Status"+roomTrans.getStatus(), Toast.LENGTH_SHORT).show();
+                //bookFragmentAdapter.updateList();
                 dismiss();
                 break;
             case R.id.checkOutButton:
-                TasksLocalDataSource.getInstance(getActivity()).roomCheckOut(transactionId, Calendar.getInstance().getTime());
+                //TasksLocalDataSource.getInstance(getActivity()).roomCheckOut(transactionId, Calendar.getInstance().getTime());
+                roomViewModel.checkOut(roomTrans.getTransactionId());
+               // bookFragmentAdapter.updateList();
                 dismiss();
                 break;
         }
     }
+
+//    public void setOnUpdateListener(BookFragmentAdapter bookFragmentAdapter) {
+//        this.bookFragmentAdapter=bookFragmentAdapter;
+//    }
 }
 

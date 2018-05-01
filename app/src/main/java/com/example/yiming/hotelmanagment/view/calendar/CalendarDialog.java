@@ -1,8 +1,10 @@
 package com.example.yiming.hotelmanagment.view.calendar;
 
-import android.app.DialogFragment;
+
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +22,15 @@ import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 import com.example.yiming.hotelmanagment.common.Room;
 import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.livedata.RoomDatabase.RoomViewModel;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CalendarDialog extends DialogFragment  {
+public class CalendarDialog extends DialogFragment {
     Spinner avaliable_roomNumber;
     Spinner book_customer;
     Button commit_book;
@@ -38,7 +42,9 @@ public class CalendarDialog extends DialogFragment  {
     ArrayAdapter<String> custAdapter;
     CalendarPagerAdapter calendarPagerAdapter;
     ArrayList<Customer> customerList;
-    List<RoomHist> historyForCalendar;
+    List<RoomTrans> historyForCalendar;
+
+    RoomViewModel roomViewModel;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +60,9 @@ public class CalendarDialog extends DialogFragment  {
         calendarPagerAdapter=new CalendarPagerAdapter(getActivity(),totalPrice,singlePrice);
         viewPager.setAdapter(calendarPagerAdapter);
 
+        roomViewModel=ViewModelProviders.of(this).get(RoomViewModel.class);
+
+
         ArrayList<String> aval_roomNumber=new ArrayList<>();
         ArrayList<String> boo_customer=new ArrayList<>();
         ArrayList<Room> roomlist= (ArrayList<Room>) TasksLocalDataSource.getInstance(getActivity()).getRoomListByBeds(beds);
@@ -66,8 +75,8 @@ public class CalendarDialog extends DialogFragment  {
             boo_customer.add(customer.getFirstName()+" "+customer.getLastName());
         }
 
-        roomAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,aval_roomNumber);
-        custAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,boo_customer);
+        roomAdapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,aval_roomNumber);
+        custAdapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,boo_customer);
 
         roomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         custAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -77,8 +86,10 @@ public class CalendarDialog extends DialogFragment  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int selectedNumber= Integer.valueOf((String) parent.getSelectedItem());
-                historyForCalendar=TasksLocalDataSource.getInstance(getActivity()).getTransactionByRoomNumber(selectedNumber);
-                calendarPagerAdapter.updateCalendar(historyForCalendar);
+                historyForCalendar=roomViewModel.getRoomTransByRoomNumber(selectedNumber);
+                if(historyForCalendar!=null){
+                    calendarPagerAdapter.updateCalendar(historyForCalendar);
+                }
             }
 
             @Override
@@ -101,7 +112,15 @@ public class CalendarDialog extends DialogFragment  {
                         int roomNumber=Integer.valueOf(avaliable_roomNumber.getSelectedItem().toString());
                         int custNumber=customerList.get(book_customer.getSelectedItemPosition()).getCustomerId();
                         Log.i("commit_book ", roomNumber+" "+custNumber);
-                        TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));
+                        RoomTrans roomTrans=new RoomTrans();
+                        roomTrans.setRoomNumber(roomNumber);
+                        roomTrans.setOwedByCustomer(custNumber);
+                        roomTrans.setExpectCheckInDate(clickDateList[0].getTime());
+                        roomTrans.setExpectCheckOutDate(clickDateList[1].getTime());
+                        roomTrans.setTotalPrice(Double.valueOf(totalPrice.getText().toString()));
+
+                        roomViewModel.bookRoom(roomTrans);
+                       // TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));
                         dismiss();
                     }
                 }

@@ -30,6 +30,7 @@ public class Constants {
     //constant lable name
     public static final String ROOMS="ROOMS";
     public static final String BOOKED="BOOKED";
+    public static final String RoomTrans="RoomTrans";
 
     //fake information for room
     public static final Double[]  PRRICE={300.0,330.0,540.0,720.0};
@@ -42,4 +43,6 @@ public class Constants {
     public static final int clicked = 1;
     public static final int betweenClick=2;
     public static final int bookedBefore=3;
+
+    public static final String fireBase="fireBase";
 }

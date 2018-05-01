@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,14 +172,14 @@ public class AdapterDate extends BaseAdapter {
         return convertView;
     }
 
-    public void updateDateCalendar(List<RoomHist> historyForCalendar) {
-        RoomHist tmp;
+    public void updateDateCalendar(List<RoomTrans> historyForCalendar) {
+        RoomTrans tmp;
         Date beginHistory;
         Date endHistory;
         for(int i=0;i<historyForCalendar.size();i++){
             tmp=historyForCalendar.get(i);
-            beginHistory=tmp.getExpectCheckInDate();
-            endHistory=tmp.getExpectCheckoOutDate();
+            beginHistory=new Date(tmp.getExpectCheckInDate());
+            endHistory=new Date(tmp.getExpectCheckOutDate());
             int beginYear=beginHistory.getYear()+1900;
             int beginMonth=beginHistory.getMonth()+1;
             int endYear=endHistory.getYear()+1900;

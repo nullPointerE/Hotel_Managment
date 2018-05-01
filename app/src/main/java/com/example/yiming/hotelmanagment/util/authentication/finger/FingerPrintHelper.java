@@ -5,12 +5,14 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.CancellationSignal;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.example.yiming.hotelmanagment.common.Constants;
+import com.example.yiming.hotelmanagment.view.IViewActivityLogin;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -30,15 +32,14 @@ import javax.crypto.SecretKey;
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
 
-public class FingerPrintHelper implements IFingerPrintAuthManager.OnDataListener, IFingerPrintHelper{
+public class FingerPrintHelper extends FingerprintManager.AuthenticationCallback{
     private Context context;
     private KeyStore keyStore;
     private Cipher cipher;
-    private FingerPrintAuthManager helper;
-    private IFingerPrintDataListener iFingerPrintDataListener;
-    public FingerPrintHelper(Context context, IFingerPrintDataListener iFingerPrintDataListener){
+    private IViewActivityLogin iViewActivityLogin;
+    public FingerPrintHelper(Context context, IViewActivityLogin iViewActivityLogin){
         this.context = context;
-        this.iFingerPrintDataListener = iFingerPrintDataListener;
+        this.iViewActivityLogin = iViewActivityLogin;
     }
 
     public void onFingerPrintFunc() {
@@ -62,8 +63,11 @@ public class FingerPrintHelper implements IFingerPrintAuthManager.OnDataListener
 
                 if (cipherInit()) {
                     FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                    helper = new FingerPrintAuthManager(context, this);
-                    helper.startAuthentication(fingerprintManager, cryptoObject);
+                    CancellationSignal cenCancellationSignal = new CancellationSignal();
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED)
+                        return;
+                    fingerprintManager.authenticate(cryptoObject, cenCancellationSignal, 0, this, null);
+
 
                 }
             }
@@ -151,12 +155,23 @@ public class FingerPrintHelper implements IFingerPrintAuthManager.OnDataListener
     }
 
     @Override
-    public void onSuccess() {
-        iFingerPrintDataListener.onFingerPrintAuthSuccess();
+    public void onAuthenticationFailed() {
+        super.onAuthenticationFailed();
+        iViewActivityLogin.onFailure();
+
     }
 
     @Override
-    public void onFailure() {
-        iFingerPrintDataListener.onFingerPrintAuthFailure();
+    public void onAuthenticationError(int errorCode, CharSequence errString) {
+        super.onAuthenticationError(errorCode, errString);
+        iViewActivityLogin.onFailure();
     }
+
+    @Override
+    public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+        super.onAuthenticationSucceeded(result);
+        iViewActivityLogin.onSuccess();
+
+    }
+
 }

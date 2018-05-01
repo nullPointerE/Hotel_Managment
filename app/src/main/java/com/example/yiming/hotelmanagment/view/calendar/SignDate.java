@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SignDate extends LinearLayout {
         adapterDate.setChangeStatusListener(changeStatusListener);
     }
 
-    public void updateCalendar(List<RoomHist> historyForCalendar) {
+    public void updateCalendar(List<RoomTrans> historyForCalendar) {
         adapterDate.updateDateCalendar(historyForCalendar);
     }
 }

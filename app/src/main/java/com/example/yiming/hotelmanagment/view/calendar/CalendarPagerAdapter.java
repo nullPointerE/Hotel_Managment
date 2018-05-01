@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 
 import junit.framework.TestCase;
 
@@ -82,7 +83,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
     }
 
 
-    public void updateCalendar(List<RoomHist> historyForCalendar) {
+    public void updateCalendar(List<RoomTrans> historyForCalendar) {
         Log.i("mViews ", mViews.size() + "");
         for (int i = 0; i < mViews.size(); i++) {
             mViews.get(i).updateCalendar(historyForCalendar);

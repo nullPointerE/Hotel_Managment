@@ -23,16 +23,22 @@ import com.example.yiming.hotelmanagment.view.fragment.AddRoomDialog;
 
 import javax.crypto.Cipher;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    @BindView(R.id.toolBar)
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewPager = findViewById(R.id.viewPager);
-        toolbar = findViewById(R.id.toolBar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);   // disable tool bar title
 

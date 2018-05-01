@@ -1,6 +1,9 @@
 package com.example.yiming.hotelmanagment.view.fragment;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,18 +17,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.data.livedata.RoomDatabase.RoomViewModel;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 import com.example.yiming.hotelmanagment.util.adapter.BookFragmentAdapter;
+
+import java.util.List;
 
 public class BookedFragment extends Fragment {
     RecyclerView recyclerView;
     BookFragmentAdapter bookFragmentAdapter;
     SwipeRefreshLayout mySwipeRefreshLayout;
+
+    RoomViewModel roomViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.booked,container,false);
         recyclerView=v.findViewById(R.id.booked);
         bookFragmentAdapter=new BookFragmentAdapter(getActivity());
+        roomViewModel= ViewModelProviders.of(this).get(RoomViewModel.class);
+        roomViewModel.getAllRoomTrans().observe(this, new Observer<List<RoomTrans>>() {
+            @Override
+            public void onChanged(@Nullable List<RoomTrans> roomTrans) {
+                bookFragmentAdapter.setList(roomTrans);
+            }
+        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(bookFragmentAdapter);
@@ -44,7 +60,7 @@ public class BookedFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                         // 刷新动画开始后回调到此方法
-                        bookFragmentAdapter.updateList();
+                        //bookFragmentAdapter.updateList();
                         mySwipeRefreshLayout.setRefreshing(false);
                     }
                 }

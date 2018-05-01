@@ -15,6 +15,7 @@ import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
 import com.example.yiming.hotelmanagment.common.Room;
 import com.example.yiming.hotelmanagment.common.RoomHist;
+import com.example.yiming.hotelmanagment.data.livedata.module.RoomTrans;
 import com.example.yiming.hotelmanagment.data.local.TasksLocalDataSource;
 import com.example.yiming.hotelmanagment.data.local.TasksPersistenceContract;
 import com.example.yiming.hotelmanagment.view.MainActivity;
@@ -25,11 +26,15 @@ import java.util.List;
 public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapter.Holder> {
     Context context;
     MainActivity mainActivity;
-    List<RoomHist> bookedRoom;
+    List<RoomTrans> bookedRoom;
     public BookFragmentAdapter(Context context){
         this.context=context;
         mainActivity= (MainActivity) context;
-        bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
+    }
+
+    public void setList(List<RoomTrans> roomTrans){
+        bookedRoom=roomTrans;
+        notifyDataSetChanged();
     }
 
 
@@ -44,7 +49,7 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.imageView.setImageResource(Constants.PIC[position%4]);
-        RoomHist temp=bookedRoom.get(position);
+        RoomTrans temp=bookedRoom.get(position);
         holder.custN.setText("Customer Name: "+temp.getOwedByCustomer()+"");
         holder.roomP.setText("Total Price: "+temp.getTotalPrice());
         holder.roomN.setText("Room Number: "+temp.getRoomNumber());
@@ -53,12 +58,15 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
 
     @Override
     public int getItemCount() {
+        if(bookedRoom==null){
+            return 0;
+        }
         return bookedRoom.size();
     }
 
     public void updateList() {
-        bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
-        notifyDataSetChanged();
+       // bookedRoom= TasksLocalDataSource.getInstance(context).getRoomTrasactionsList();
+      //  notifyDataSetChanged();
     }
 
     public class Holder extends RecyclerView.ViewHolder{
@@ -66,7 +74,7 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
         TextView custN;
         TextView roomP;
         TextView roomN;
-        RoomHist thisRoom;
+        RoomTrans thisRoom;
         public Holder(View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.roomPic);
@@ -78,10 +86,11 @@ public class BookFragmentAdapter extends RecyclerView.Adapter<BookFragmentAdapte
                 public void onClick(View v) {
                     BookedEditDIalog bookedEditDIalog=new BookedEditDIalog();
                     Bundle bundle=new Bundle();
-                    bundle.putInt(TasksPersistenceContract.RoomTransaction.transactionId,thisRoom.getTransactionId());
-                    bundle.putInt(TasksPersistenceContract.RoomTransaction.status, thisRoom.isCheckedIn());
+                    //bundle.putInt(TasksPersistenceContract.RoomTransaction.transactionId,thisRoom.getTransactionId());
+                    //bundle.putInt(TasksPersistenceContract.RoomTransaction.status, thisRoom.getStatus());
+                    bundle.putParcelable(Constants.RoomTrans,thisRoom);
                     bookedEditDIalog.setArguments(bundle);
-                    bookedEditDIalog.show(mainActivity.getFragmentManager(),"book edit");
+                    bookedEditDIalog.show(mainActivity.getSupportFragmentManager(),"book edit");
                 }
             });
         }
