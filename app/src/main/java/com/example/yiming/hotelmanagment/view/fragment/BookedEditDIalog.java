@@ -61,6 +61,7 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         lunchTimeTv = v.findViewById(R.id.lunchTimeTv);
         dinnerTimeTv = v.findViewById(R.id.dinnerTimeTv);
         checkIn = v.findViewById(R.id.checkinButton);
+        checkOut = v.findViewById(R.id.checkOutButton);
         if(status==Constants.isCheckIn) {
             checkIn.setEnabled(false);
             checkIn.setTextColor(getResources().getColor(R.color.white_transparent));
@@ -69,7 +70,6 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
             checkOut.setEnabled(false);
             checkOut.setTextColor(getResources().getColor(R.color.white_transparent));
         }
-        checkOut = v.findViewById(R.id.checkOutButton);
         checkIn.setOnClickListener(this);
         checkOut.setOnClickListener(this::onClick);
         breakfastTimeTv.setText("6:30");

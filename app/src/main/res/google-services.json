@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "140096146527",
+    "firebase_url": "https://hotelmanagement-87b16.firebaseio.com",
+    "project_id": "hotelmanagement-87b16",
+    "storage_bucket": "hotelmanagement-87b16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140096146527:android:fa0760e5eed52593",
+        "android_client_info": {
+          "package_name": "com.example.yiming.hotelmanagment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140096146527-c9s2cs3t2722al5aoemf7fef7l0kujvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXL4OvTH4WuQmMAV7sK_06sB86-C-ja7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
