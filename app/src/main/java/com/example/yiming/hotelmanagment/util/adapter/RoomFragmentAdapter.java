@@ -32,7 +32,7 @@ public class RoomFragmentAdapter extends RecyclerView.Adapter<RoomFragmentAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.imageView.setImageResource(Constants.PIC[position]);
+        holder.imageView.setImageResource(Constants.PIC[position%4]);
         holder.beds.setText(Constants.BEDS[position]+"");
         holder.price.setText(Constants.PRRICE[position]+"");
         holder.bed=Constants.BEDS[position];

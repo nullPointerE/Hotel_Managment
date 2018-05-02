@@ -22,5 +22,11 @@
         android:orderInCategory="2"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/techUsed"
+        android:title="Technologies Used"
+        android:orderInCategory="3"
+        app:showAsAction="never"
+        />
 
 </menu>

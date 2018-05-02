@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.addRoom:
                 AddRoomDialog addRoomDialog=new AddRoomDialog();
                 addRoomDialog.show(getFragmentManager(),"addRoom");
+                break;
+            case R.id.techUsed:
+                startActivity(new Intent(this, TechnologiesUsed.class));
+
         }
         return super.onOptionsItemSelected(item);
     }

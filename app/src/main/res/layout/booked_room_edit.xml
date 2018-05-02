@@ -96,15 +96,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/breakfastTv"
+        <Spinner
+            android:id="@+id/breakfastSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_weight="1"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:text="@string/breakfast_tv_text" />
+            android:layout_height="wrap_content"
+            />
         <TextView
             android:id="@+id/breakfastTimeTv"
             android:layout_width="wrap_content"
@@ -117,15 +114,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/lunchTv"
+        <Spinner
+            android:id="@+id/lunchSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="25dp"
             android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="@string/lunchTv_text" />
+            android:layout_height="wrap_content"
+            />
         <TextView
             android:id="@+id/lunchTimeTv"
             android:layout_width="wrap_content"
@@ -139,15 +133,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
-        <TextView
-            android:id="@+id/dinnerTv"
+        <Spinner
+            android:id="@+id/dinnerSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_weight="1"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:text="@string/dinnerTv_text" />
+            android:layout_height="wrap_content"
+            />
         <TextView
             android:id="@+id/dinnerTimeTv"
             android:layout_width="wrap_content"

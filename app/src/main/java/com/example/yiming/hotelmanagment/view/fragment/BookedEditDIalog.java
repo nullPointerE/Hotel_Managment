@@ -12,8 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -41,8 +44,9 @@ import java.util.Date;
 
 public class BookedEditDIalog extends DialogFragment implements View.OnClickListener {
     private TextView degreeOfLightsTV, editMealsTV, breakfastTimeTv, lunchTimeTv, dinnerTimeTv;
+    private Spinner breakfast, lunch, dinner;
     private SeekBar seekBar;
-    private String format="";
+    private String format="", breakfastSelected, lunchSelected, dinnerSelected;
     private int hour, minute;
     private Button checkIn, checkOut;
     Button orderFood;
@@ -59,6 +63,53 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         checkIn= v.findViewById(R.id.checkinButton);
         checkOut= v.findViewById(R.id.checkOutButton);
         orderFood=v.findViewById(R.id.orderFood);
+        breakfast = v.findViewById(R.id.breakfastSpinner);
+        ArrayAdapter<CharSequence> breakfastAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.breakfast, R.layout.spinner_item);
+        breakfast.setAdapter(breakfastAdapter);
+        breakfast.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                breakfastSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        lunch = v.findViewById(R.id.lunchSpinner);
+
+        ArrayAdapter<CharSequence> lunchAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.lunch, R.layout.spinner_item);
+        lunch.setAdapter(lunchAdapter);
+        lunch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                lunchSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        dinner = v.findViewById(R.id.dinnerSpinner);
+
+        ArrayAdapter<CharSequence> dinnerAdapter =  ArrayAdapter.createFromResource(getActivity(), R.array.lunch, R.layout.spinner_item);
+        dinner.setAdapter(dinnerAdapter);
+        dinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               dinnerSelected = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         roomViewModel= ViewModelProviders.of(this).get(RoomViewModel.class);
         //status = getArguments().getInt(TasksPersistenceContract.RoomTransaction.status);
         //transactionId =getArguments().getInt(TasksPersistenceContract.RoomTransaction.transactionId);
@@ -164,13 +215,14 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
             @Override
             public void onClick(View v) {
                FireBaseRealTime fireBaseRealTime= new FireBaseRealTime();
+
                 FoodOrder foodOrder=new FoodOrder();
-                foodOrder.setCustomerId(10);
+                foodOrder.setCustomerId(roomTrans.getOwedByCustomer());
                 foodOrder.setOrderId(10);
-                foodOrder.setRoomNumber(101);
-                foodOrder.setStatus(2);
+                foodOrder.setRoomNumber(roomTrans.getRoomNumber());
+                foodOrder.setStatus(Constants.isBooked);
                 foodOrder.setTotalPrice(200);
-                foodOrder.setFoodName("name");
+                foodOrder.setFoodName("Break Fast: "+breakfastSelected+", "+"Lunch: "+lunchSelected+", "+"Dinner: "+dinnerSelected);
                 fireBaseRealTime.start(foodOrder);
             }
         });

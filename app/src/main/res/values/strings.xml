@@ -25,6 +25,15 @@
         <item>5</item>
     </integer-array>
 
+    <string-array name="breakfast">
+        <item>Milk</item>
+        <item>Scrambled Egg</item>
+    </string-array>
+
+    <string-array name="lunch">
+        <item>Salad</item>
+        <item> Sandwich</item>
+    </string-array>
     <string name="book">BOOK</string>
     <string name="address_info_companyName_hint">Company Name</string>
     <string name="address_info_city_hintText">City*</string>
@@ -71,6 +80,17 @@
     <string name="addEmployee_design_text">Designation</string>
     <string name="addEmployee_submit_text">Submit</string>
     <string name="addEmployee_cancel_text">Cancel</string>
-
+    <string name="technologies_used">
+        Technologies Used:\n\n
+        Retrofit \n
+        Finger Print Authentication \n
+        RealTime FireBase DataBase \n
+        Room Database \n
+        RecyclerView \n
+        Custom Calender \n
+        Tab Layout \n
+        Dagger 2 \n
+        ButterKnife \n
+    </string>
 
 </resources>

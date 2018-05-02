@@ -26,19 +26,19 @@
         <activity android:name=".view.GuestInformationActivity" />
         <activity android:name=".view.ManagerScreenActivity" />
         <activity android:name=".view.AddEmployeeActivity" />
-        <service
-            android:name=".util.firebase.MyFirebase">
+
+        <service android:name=".util.firebase.MyFirebase">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".util.firebase.FireBaseMessage">
+        <service android:name=".util.firebase.FireBaseMessage">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".view.TechnologiesUsed"></activity>
     </application>
 
 </manifest>

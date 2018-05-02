@@ -18,9 +18,10 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -34,35 +35,28 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-
     //retrofit
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.android.volley:volley:1.1.0'
-
     //rxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
     // butterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //dagger2
     implementation 'com.google.dagger:dagger:2.13'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
-
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
-
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     implementation 'com.android.support:design:27.1.1'
-
 }
 
 

@@ -35,7 +35,7 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.employeeName.setText(employees.getRoomdetails().get(position).getEmpname());
-        holder.employeePay.setText(employees.getRoomdetails().get(position).getEmpsalary());
+        holder.employeePay.setText("$"+employees.getRoomdetails().get(position).getEmpsalary());
     }
 
     @Override
