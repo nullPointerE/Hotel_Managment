@@ -2,10 +2,19 @@ package com.example.yiming.hotelmanagment.common;
 
 public class FoodOrder {
     int orderId;
+    String foodName;
     int roomNumber;
     int customerId;
     double totalPrice;
     int status;
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
 
     public int getOrderId() {
         return orderId;
