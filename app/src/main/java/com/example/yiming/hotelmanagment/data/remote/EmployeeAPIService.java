@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface EmployeeAPIService {
 
     @GET(Constants.EMPLOYEE_END_URL)
-    Call<Employee> getEmployees();
+    Observable<Employee> getEmployees();
 
     @GET(Constants.ADD_EMPLOYEE_END_URL)
     Call<AddEmployee> getAddEmployees(@Query("empName") String empName, @Query("empAdd") String empAdd, @Query("empPhone") String empPhone, @Query("empSalary") String empSalary, @Query("empDesign") String empDesign );

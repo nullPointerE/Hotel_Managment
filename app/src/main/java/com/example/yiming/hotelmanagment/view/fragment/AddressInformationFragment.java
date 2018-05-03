@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.yiming.hotelmanagment.R;
 import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Customer;
@@ -26,7 +28,7 @@ private TextView companyName, city, postalCode, dayTimePhone, mobilePhone, addre
 private Spinner country;
 private Button continueButton;
 private Customer customer;
-
+private AwesomeValidation awesomeValidation;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,16 +79,23 @@ private Customer customer;
     @Override
     public void onClick(View view) {
         //callValidations
-        customer.setCompanyName(companyName.getText().toString());
-        customer.setAddress(address.getText().toString());
-        customer.setCity(city.getText().toString());
-        customer.setPostalCode(postalCode.getText().toString());
-        customer.setDaytimePhone(dayTimePhone.getText().toString());
-        customer.setMobilePhone(mobilePhone.getText().toString());
-        AdditionalInformationFragment additionalInformationFragment = new AdditionalInformationFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
-        additionalInformationFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, additionalInformationFragment).commit();
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(getActivity(), R.id.address_info_addressET, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.company_name_register);
+        awesomeValidation.addValidation(getActivity(), R.id.address_info_cityET, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.city_name_register);
+        awesomeValidation.addValidation(getActivity(), R.id.address_info_datTimePhoneEt, "[0-9]{10}$", R.string.mobile_number_register);
+
+        if(awesomeValidation.validate()) {
+            customer.setCompanyName(companyName.getText().toString());
+            customer.setAddress(address.getText().toString());
+            customer.setCity(city.getText().toString());
+            customer.setPostalCode(postalCode.getText().toString());
+            customer.setDaytimePhone(dayTimePhone.getText().toString());
+            customer.setMobilePhone(mobilePhone.getText().toString());
+            AdditionalInformationFragment additionalInformationFragment = new AdditionalInformationFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.GUEST_INFO_BUNDLE_KEY, (Parcelable) customer);
+            additionalInformationFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(R.id.guest_information_frameLayout, additionalInformationFragment).commit();
+        }
     }
 }

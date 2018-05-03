@@ -87,10 +87,16 @@
         RealTime FireBase DataBase \n
         Room Database \n
         RecyclerView \n
-        Custom Calender \n
+        Custom Calendar \n
         Tab Layout \n
         Dagger 2 \n
         ButterKnife \n
     </string>
-
+    <string name="fname_error_register">Invalid First Name</string>
+    <string name="lname_error_register">Invalid Last Name</string>
+    <string name="email_error_register">Invalid  Email Address</string>
+    <string name="mobile_error_register">Invalid Mobile Number</string>
+    <string name="company_name_register">Invalid Address</string>
+    <string name="city_name_register">Invalid Address</string>
+    <string name="mobile_number_register">Invalid Phone Number</string>
 </resources>
