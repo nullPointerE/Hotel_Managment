@@ -51,9 +51,6 @@
             android:drawableLeft="@drawable/bed2"
             android:text="roomN"
             android:textColor="@color/white" />
-
-
     </LinearLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

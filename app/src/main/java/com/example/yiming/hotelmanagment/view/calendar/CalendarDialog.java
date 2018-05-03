@@ -118,6 +118,7 @@ public class CalendarDialog extends DialogFragment {
                         roomTrans.setExpectCheckInDate(clickDateList[0].getTime());
                         roomTrans.setExpectCheckOutDate(clickDateList[1].getTime());
                         roomTrans.setTotalPrice(Double.valueOf(totalPrice.getText().toString()));
+                        roomTrans.setStatus(Constants.isBooked);
 
                         roomViewModel.bookRoom(roomTrans);
                        // TasksLocalDataSource.getInstance(getActivity()).bookRoom(roomNumber,custNumber,clickDateList[0],clickDateList[1],Double.valueOf(totalPrice.getText().toString()));

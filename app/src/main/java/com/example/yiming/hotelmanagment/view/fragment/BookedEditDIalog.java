@@ -134,7 +134,7 @@ public class BookedEditDIalog extends DialogFragment implements View.OnClickList
         breakfastTimeTv = v.findViewById(R.id.breakfastTimeTv);
         lunchTimeTv = v.findViewById(R.id.lunchTimeTv);
         dinnerTimeTv = v.findViewById(R.id.dinnerTimeTv);
-        if(roomTrans.getStatus()==Constants.isCheckIn) {
+        if(roomTrans.getStatus()!=Constants.isBooked) {
             checkIn.setEnabled(false);
             checkIn.setTextColor(getResources().getColor(R.color.white_transparent));
         }

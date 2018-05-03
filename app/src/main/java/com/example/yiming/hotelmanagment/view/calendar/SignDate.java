@@ -18,6 +18,7 @@ public class SignDate extends LinearLayout {
     private InnerGridView gvWeek;
     private InnerGridView gvDate;
     private AdapterDate adapterDate;
+    List<RoomTrans> historyForCalendar;
 
     public SignDate(Context context){
         super(context);
@@ -47,5 +48,6 @@ public class SignDate extends LinearLayout {
 
     public void updateCalendar(List<RoomTrans> historyForCalendar) {
         adapterDate.updateDateCalendar(historyForCalendar);
+        this.historyForCalendar=historyForCalendar;
     }
 }

@@ -75,7 +75,7 @@ public class CalendarPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup view, int position, Object object) {
         view.removeView((SignDate) object);
-        mViews.remove(position);
+        mViews.remove((SignDate) object);
     }
 
     public Date[] getClickDateList() {
