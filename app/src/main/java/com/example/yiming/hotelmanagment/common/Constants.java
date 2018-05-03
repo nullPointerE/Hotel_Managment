@@ -19,6 +19,7 @@ public class Constants {
     public static final String EMPLOYEE_END_URL="hms_emp_info.php";
     public static final String ADD_EMPLOYEE_BASE_URL="http://rjtmobile.com/ansari/hms/hmsapp/";
     public static final String ADD_EMPLOYEE_END_URL="hms_emp_manag.php";
+    public static final int[] EMPLOYEEPIC = {R.drawable.employees, R.drawable.hotel_employees2, R.drawable.hotel_employees3};
     //  customer status
     public static final int roomIsGuaranteed =1;
     public static final int roomNotGuaranteed =0;
@@ -31,7 +32,6 @@ public class Constants {
     public static final String ROOMS="ROOMS";
     public static final String BOOKED="BOOKED";
     public static final String RoomTrans="RoomTrans";
-
     //fake information for room
     public static final Double[]  PRRICE={300.0,330.0,540.0,720.0};
     public static final int[]  BEDS={1,2,3,5};

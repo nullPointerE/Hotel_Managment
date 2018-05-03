@@ -56,5 +56,6 @@ public class MVPTest {
 
         // Then the presenter is set to the view
         verify(presenterManagerScreen).jasonCall();
+
     }
 }

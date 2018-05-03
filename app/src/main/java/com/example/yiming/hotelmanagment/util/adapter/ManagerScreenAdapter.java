@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yiming.hotelmanagment.R;
+import com.example.yiming.hotelmanagment.common.Constants;
 import com.example.yiming.hotelmanagment.common.Employee;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
 
         holder.employeeName.setText(employees.getRoomdetails().get(position).getEmpname());
         holder.employeePay.setText("$"+employees.getRoomdetails().get(position).getEmpsalary());
+        holder.employeeImage.setImageResource(Constants.EMPLOYEEPIC[position%3]);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class ManagerScreenAdapter extends RecyclerView.Adapter<ManagerScreenAdap
         TextView employeeName, employeePay;
         public MyViewHolder(View itemView) {
             super(itemView);
-            employeeImage = itemView.findViewById(R.id.employeeImg);
+            employeeImage = itemView.findViewById(R.id.employeeImage);
             employeeName = itemView.findViewById(R.id.employee_name);
             employeePay = itemView.findViewById(R.id.employee_pay);
         }

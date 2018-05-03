@@ -62,6 +62,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     implementation 'com.android.support:design:27.1.1'
+    testCompile 'org.mockito:mockito-core:2.6.8'
 }
 
 
